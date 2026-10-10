@@ -1,8 +1,8 @@
 hero:
   name: 이승환
   tagline: 정보보안과 개발을 공부하는 학생입니다.
-  photo: /assets/img/profile.png
-about: 리버싱, 웹해킹, 포너블, 악성코드 연구, 개발 등에 관심이 있습니다라라.
+  photo: /assets/img/uploads/img_1598.jpeg
+about: 리버싱, 웹해킹, 포너블, 악성코드 연구, 개발 등에 관심이 있습니다.
 skills:
   - category: 프로그래밍 언어
     items: Python, C, C++, JAVA, Rust
@@ -10,7 +10,7 @@ skills:
     items: Web Hacking, Reversing, Burp Suite
 projects:
   - title: 화이트햇스쿨
-    subtitle: 백신 우회기법 개발
+    subtitle: 오픈소스 악성코드를 이용한 백신 우회기법 개발
     description: 오픈소스 악성코드를 사용하여 백신(AV) 우회기법을 개발한 프로젝트입니다.
     link: https://github.com/tortoiese/AV-practice
   - title: 멋쟁이사자처럼 중앙톤
@@ -20,7 +20,7 @@ projects:
   - title: MSGCTF 해킹대회
     subtitle: 프론트엔드 / 웹 디자인
     description: 해킹대회 플랫폼의 프론트엔드 개발 및 웹 디자인을 담당했습니다.
-    link: https://github.com/tortoiese/mjsecvacation
+    link: https://github.com/MSG-CTF
 experience:
   - title: 명지대학교 정보통신공학과
     period: 2022.03 ~ 2028.02 (예정)
