@@ -1,0 +1,81 @@
+backend:
+  name: github
+  repo: tortoiese/tortoiese.github.io   # GitHub 사용자/저장소
+  branch: main
+  # GitHub Pages는 Netlify가 아니므로 OAuth 중계 서버가 필요합니다.
+  # 아래 base_url 을 본인이 배포한 OAuth 프록시 주소로 바꾸세요. (가이드 참고)
+  base_url: https://YOUR-OAUTH-PROXY.example.workers.dev
+  # 프록시가 /auth 가 아닌 다른 경로를 쓰면 auth_endpoint 도 맞춰주세요.
+  # auth_endpoint: auth
+
+# 업로드되는 이미지 저장 위치
+media_folder: assets/img/uploads
+public_folder: /assets/img/uploads
+
+# 편집 UI 언어
+locale: ko
+
+collections:
+  - name: portfolio
+    label: 포트폴리오
+    files:
+      - name: content
+        label: 전체 내용
+        file: _data/portfolio.yml
+        fields:
+          - label: Hero (첫 화면)
+            name: hero
+            widget: object
+            fields:
+              - { label: 이름, name: name, widget: string }
+              - { label: 한 줄 소개, name: tagline, widget: string }
+              - { label: 프로필 사진, name: photo, widget: image, required: false }
+
+          - { label: About Me (자기소개), name: about, widget: text }
+
+          - label: Skills (기술 스택)
+            name: skills
+            widget: list
+            label_singular: 스킬 분류
+            summary: "{{fields.category}}"
+            fields:
+              - { label: 분류, name: category, widget: string }
+              - { label: 항목, name: items, widget: string, hint: "쉼표(,)로 구분해서 입력하세요. 예) Python, C, Rust" }
+
+          - label: Projects (프로젝트)
+            name: projects
+            widget: list
+            label_singular: 프로젝트
+            summary: "{{fields.title}}"
+            fields:
+              - { label: 제목, name: title, widget: string }
+              - { label: 부제, name: subtitle, widget: string, required: false }
+              - { label: 설명, name: description, widget: text }
+              - { label: 링크, name: link, widget: string, required: false }
+
+          - label: Experience & Education (경력·학력)
+            name: experience
+            widget: list
+            label_singular: 항목
+            summary: "{{fields.title}}"
+            fields:
+              - { label: 제목, name: title, widget: string }
+              - { label: 기간, name: period, widget: string }
+              - { label: 설명, name: description, widget: text, required: false }
+
+          - label: Honors & Certifications (수상·자격증)
+            name: honors
+            widget: list
+            label_singular: 항목
+            summary: "{{fields.title}}"
+            fields:
+              - { label: 제목, name: title, widget: string }
+              - { label: 발급기관, name: issuer, widget: string, required: false }
+              - { label: 날짜, name: date, widget: string, required: false }
+
+          - label: Contact (연락처)
+            name: contact
+            widget: object
+            fields:
+              - { label: 이메일, name: email, widget: string }
+              - { label: 블로그, name: blog, widget: string, required: false }

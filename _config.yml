@@ -1,0 +1,14 @@
+title: 이승환 | Portfolio
+description: 정보보안과 개발을 공부하는 학생입니다.
+lang: ko
+
+# GitHub Pages가 Jekyll로 빌드합니다.
+# admin 폴더(Decap CMS)는 그대로 복사되도록 처리에서 제외하지 않습니다.
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+
+# 마크다운 엔진
+markdown: kramdown
