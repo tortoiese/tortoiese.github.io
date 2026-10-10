@@ -2,11 +2,8 @@ backend:
   name: github
   repo: tortoiese/tortoiese.github.io   # GitHub 사용자/저장소
   branch: main
-  # GitHub Pages는 Netlify가 아니므로 OAuth 중계 서버가 필요합니다.
-  # 아래 base_url 을 본인이 배포한 OAuth 프록시 주소로 바꾸세요. (가이드 참고)
-  base_url: https://YOUR-OAUTH-PROXY.example.workers.dev
-  # 프록시가 /auth 가 아닌 다른 경로를 쓰면 auth_endpoint 도 맞춰주세요.
-  # auth_endpoint: auth
+  # OAuth 중계 서버(Cloudflare Worker) 주소
+  base_url: https://tortoiese-github-io.albert419311.workers.dev
 
 # 업로드되는 이미지 저장 위치
 media_folder: assets/img/uploads
