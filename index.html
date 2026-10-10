@@ -271,7 +271,7 @@
       var turtle=document.getElementById('navTurtle');
       var links=[].slice.call(document.querySelectorAll('.nav-a'));
       var views=[].slice.call(document.querySelectorAll('.view'));
-      var clickable=[].slice.call(document.querySelectorAll('[data-view]'));
+      var clickable=[].slice.call(document.querySelectorAll('.nav-a, .brand'));
 
       function moveTurtle(link){
         var tx=link.offsetLeft+link.offsetWidth/2-turtle.offsetWidth/2;
