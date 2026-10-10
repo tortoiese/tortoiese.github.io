@@ -9,6 +9,9 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - vendor
+  - wrangler.toml
+  - src
+  - node_modules
 
 # 마크다운 엔진
 markdown: kramdown
