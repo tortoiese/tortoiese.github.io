@@ -1,233 +1,163 @@
+---
+# 이 파일은 Jekyll이 처리합니다. 내용은 _data/portfolio.yml 에서 불러옵니다.
+---
+{%- assign p = site.data.portfolio -%}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>이승환 | Garage</title>
+  <title>{{ p.hero.name }} | Portfolio</title>
+  <meta name="description" content="{{ p.hero.tagline }}">
   <style>
     :root{
-      --bg:#0c0d10;
-      --panel:#15171c;
-      --panel2:#1c1f26;
-      --line:#2a2e38;
-      --text:#e9ecf2;
-      --muted:#99a0ae;
-      --accent:#d5001c;        /* Porsche guards red */
-      --warn:#f2b705;          /* hazard yellow */
-      --steel:#8b94a5;
+      --bg:#0c0d10; --panel:#15171c; --panel2:#1c1f26; --line:#2a2e38;
+      --text:#e9ecf2; --muted:#99a0ae; --accent:#d5001c; --warn:#f2b705; --steel:#8b94a5;
+      --nav-h:60px;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
-    body{
-      font-family:"Segoe UI","Malgun Gothic",-apple-system,sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      line-height:1.7;
-      -webkit-font-smoothing:antialiased;
-    }
+    body{font-family:"Segoe UI","Malgun Gothic",-apple-system,sans-serif;
+      background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
     .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+    .hazard{height:10px;background:repeating-linear-gradient(45deg,var(--warn) 0 20px,#111 20px 40px);opacity:.85}
 
-    /* ===== hazard stripe ===== */
-    .hazard{
-      height:14px;
-      background:repeating-linear-gradient(45deg,var(--warn) 0 22px,#111 22px 44px);
-      opacity:.85;
-    }
+    /* ===== NAV ===== */
+    nav{position:sticky;top:0;z-index:50;height:var(--nav-h);
+      background:rgba(12,13,16,.86);backdrop-filter:blur(8px);
+      border-bottom:1px solid var(--line)}
+    nav .wrap{height:100%;display:flex;align-items:center;justify-content:space-between}
+    .brand{font-weight:800;letter-spacing:1px;color:#fff}
+    .brand b{color:var(--accent)}
+    .nav-links{display:flex;gap:4px;align-items:center}
+    .nav-links a{padding:8px 12px;border-radius:8px;font-size:.9rem;font-weight:600;color:var(--muted);transition:.15s}
+    .nav-links a:hover{color:#fff;background:var(--panel2)}
+    .menu-btn{display:none;background:none;border:1px solid var(--line);color:#fff;
+      font-size:1.3rem;border-radius:8px;padding:2px 10px;cursor:pointer}
 
-    /* ===== garage hero ===== */
-    .hero{
-      position:relative;
-      background:
-        radial-gradient(120% 90% at 50% -10%, #23262e 0%, #101216 55%, #0b0c0f 100%);
-      padding:34px 0 10px;
-      overflow:hidden;
-    }
-    .shutter{
-      position:absolute;inset:0 0 auto 0;height:70px;
-      background:repeating-linear-gradient(#20242c 0 8px,#171a20 8px 16px);
-      border-bottom:3px solid #000;
-      box-shadow:0 6px 18px rgba(0,0,0,.6);
-    }
-    .bay{
-      position:relative;
-      margin-top:78px;
-      background:linear-gradient(#141720,#0e1014);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:26px 24px 20px;
-      box-shadow:inset 0 0 60px rgba(0,0,0,.6);
-    }
-    .neon{
-      text-align:center;
-      font-size:2.9rem;
-      font-weight:800;
-      letter-spacing:2px;
-      color:#fff;
-      text-shadow:0 0 6px var(--accent),0 0 18px var(--accent),0 0 42px rgba(213,0,28,.6);
-    }
-    .neon small{display:block;font-size:.95rem;font-weight:600;letter-spacing:5px;color:var(--steel);text-shadow:none;margin-top:6px}
+    /* ===== HERO ===== */
+    .hero{position:relative;background:radial-gradient(120% 90% at 50% -10%,#23262e 0%,#101216 55%,#0b0c0f 100%);
+      padding:48px 0 30px;overflow:hidden}
+    .hero .wrap{text-align:center}
+    .avatar{width:120px;height:120px;border-radius:50%;object-fit:cover;
+      border:4px solid var(--accent);box-shadow:0 0 0 6px rgba(213,0,28,.15);background:#222;margin-bottom:18px}
+    .neon{font-size:2.6rem;font-weight:800;letter-spacing:2px;color:#fff;
+      text-shadow:0 0 6px var(--accent),0 0 18px var(--accent),0 0 40px rgba(213,0,28,.55)}
+    .hero p.tag{color:var(--steel);font-weight:600;letter-spacing:1px;margin-top:8px}
+    .stage{margin:22px auto 0;max-width:600px}
+    .stage svg{width:100%;height:auto;display:block;filter:drop-shadow(0 20px 20px rgba(0,0,0,.5))}
+    .plate{display:inline-block;margin-top:12px;padding:4px 12px;background:#fff;color:#111;
+      font-weight:800;letter-spacing:2px;border-radius:5px;border:2px solid #cfcfcf;font-size:.82rem}
 
-    /* car stage */
-    .stage{margin:18px auto 4px;max-width:720px}
-    .stage svg{width:100%;height:auto;display:block;
-      filter:drop-shadow(0 24px 22px rgba(0,0,0,.55))}
-    .floor{
-      height:34px;margin:0 auto;max-width:760px;
-      background:
-        linear-gradient(90deg,transparent,rgba(242,183,5,.25),transparent),
-        repeating-linear-gradient(90deg,#15171c 0 60px,#191c22 60px 120px);
-      border-top:2px solid #30343f;border-radius:0 0 10px 10px;
-    }
-    .plate{
-      display:inline-block;margin-top:14px;padding:5px 14px;
-      background:#fff;color:#111;font-weight:800;letter-spacing:2px;
-      border-radius:5px;border:2px solid #cfcfcf;font-size:.9rem;
-    }
-    .hero .wrap{position:relative;text-align:center}
-
-    /* ===== sections ===== */
-    section{padding:46px 0 10px}
-    .sec-head{display:flex;align-items:center;gap:12px;margin-bottom:20px}
-    .sec-head .tag{
-      font-size:.72rem;font-weight:800;letter-spacing:2px;color:#111;
-      background:var(--warn);padding:3px 9px;border-radius:4px;
-    }
+    /* ===== SECTIONS ===== */
+    section{padding:64px 0 10px;scroll-margin-top:var(--nav-h)}
+    .sec-head{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+    .sec-head .tag{font-size:.7rem;font-weight:800;letter-spacing:2px;color:#111;background:var(--warn);padding:3px 9px;border-radius:4px}
     .sec-head h2{font-size:1.5rem;letter-spacing:-.5px}
-    .lead{color:var(--muted);max-width:720px}
+    .lead{color:var(--muted);max-width:720px;font-size:1.02rem}
 
-    /* project garage bays */
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
-    .card{
-      background:linear-gradient(var(--panel2),var(--panel));
-      border:1px solid var(--line);border-radius:12px;
-      padding:18px 18px 16px;position:relative;transition:.2s;
-      border-top:3px solid var(--accent);
-    }
+    .card{background:linear-gradient(var(--panel2),var(--panel));border:1px solid var(--line);
+      border-radius:12px;padding:18px;border-top:3px solid var(--accent);transition:.2s}
     .card:hover{transform:translateY(-4px);border-top-color:var(--warn)}
-    .card h3{font-size:1.08rem;margin-bottom:4px}
-    .card .meta{font-size:.78rem;color:var(--warn);font-weight:700;letter-spacing:1px;text-transform:uppercase}
+    .card h3{font-size:1.08rem;margin-bottom:3px}
+    .card .meta{font-size:.76rem;color:var(--warn);font-weight:700;letter-spacing:1px;text-transform:uppercase}
     .card p{color:var(--muted);font-size:.92rem;margin:8px 0 10px}
-    .card a{color:var(--text);font-size:.85rem;text-decoration:none;border-bottom:1px dashed var(--steel)}
-    .card a:hover{color:var(--warn);border-color:var(--warn)}
+    .card a.repo{font-size:.82rem;border-bottom:1px dashed var(--steel)}
+    .card a.repo:hover{color:var(--warn);border-color:var(--warn)}
 
-    /* pit board (tech stack) */
-    .chips{display:flex;flex-wrap:wrap;gap:9px}
-    .chip{
-      background:#13161c;border:1px solid var(--line);color:var(--text);
-      padding:7px 13px;border-radius:999px;font-size:.85rem;font-weight:600;
-    }
-    .chip b{color:var(--accent)}
+    .chips{display:grid;gap:14px}
+    .chip-row{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+    .chip-row .label{font-size:.8rem;font-weight:800;color:var(--accent);min-width:120px}
+    .chip{background:#13161c;border:1px solid var(--line);padding:7px 13px;border-radius:999px;font-size:.85rem;font-weight:600}
 
-    /* timeline */
     .tl{border-left:2px solid var(--line);margin-left:8px;padding-left:22px}
     .tl .item{position:relative;padding:4px 0 20px}
-    .tl .item::before{
-      content:"";position:absolute;left:-29px;top:9px;width:12px;height:12px;
-      background:var(--accent);border-radius:50%;border:3px solid var(--bg);
-    }
+    .tl .item::before{content:"";position:absolute;left:-29px;top:9px;width:12px;height:12px;background:var(--accent);border-radius:50%;border:3px solid var(--bg)}
     .tl .when{font-size:.78rem;color:var(--warn);font-weight:700;letter-spacing:1px}
     .tl h4{font-size:1.05rem;margin:2px 0}
     .tl p{color:var(--muted);font-size:.9rem}
 
-    /* list rows */
     .rows{display:grid;gap:10px}
-    .row{
-      display:flex;justify-content:space-between;align-items:center;gap:14px;
-      background:var(--panel);border:1px solid var(--line);
-      border-radius:10px;padding:13px 16px;
-    }
+    .row{display:flex;justify-content:space-between;align-items:center;gap:14px;
+      background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 16px}
     .row .name{font-weight:600}
     .row .sub{color:var(--muted);font-size:.85rem}
     .row .yr{color:var(--warn);font-weight:700;font-size:.85rem;white-space:nowrap}
 
-    /* contact */
     .contact{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
-    .contact a{
-      display:inline-flex;align-items:center;gap:8px;
-      background:var(--panel2);border:1px solid var(--line);
-      color:var(--text);text-decoration:none;padding:11px 16px;border-radius:10px;
-      font-weight:600;font-size:.92rem;transition:.2s;
-    }
-    .contact a:hover{border-color:var(--accent);color:#fff}
+    .contact a{display:inline-flex;align-items:center;gap:8px;background:var(--panel2);
+      border:1px solid var(--line);padding:12px 18px;border-radius:10px;font-weight:600;transition:.2s}
+    .contact a:hover{border-color:var(--accent);color:#fff;transform:translateY(-2px)}
 
     footer{text-align:center;color:var(--muted);font-size:.82rem;padding:40px 0 30px;margin-top:30px;border-top:1px solid var(--line)}
 
-    @media(max-width:560px){.neon{font-size:2.1rem}}
+    @media(max-width:640px){
+      .neon{font-size:2rem}
+      .menu-btn{display:block}
+      .nav-links{position:absolute;top:var(--nav-h);left:0;right:0;flex-direction:column;align-items:stretch;
+        gap:0;background:rgba(12,13,16,.98);border-bottom:1px solid var(--line);padding:8px;display:none}
+      .nav-links.open{display:flex}
+      .nav-links a{padding:12px}
+      .chip-row .label{min-width:100%}
+    }
   </style>
 </head>
 <body>
   <div class="hazard"></div>
 
-  <!-- ============ HERO: GARAGE + PORSCHE 964 ============ -->
-  <header class="hero">
-    <div class="shutter"></div>
+  <!-- ===== NAV BAR ===== -->
+  <nav>
     <div class="wrap">
-      <div class="bay">
-        <div class="neon">LEE&nbsp;SEUNG&nbsp;HWAN<small>SECURITY&nbsp;·&nbsp;THE&nbsp;GARAGE</small></div>
-
-        <!-- Porsche 964 side profile -->
-        <div class="stage">
-          <svg viewBox="0 0 720 300" role="img" aria-label="Porsche 964">
-            <!-- shadow -->
-            <ellipse cx="360" cy="256" rx="300" ry="16" fill="#000" opacity="0.45"/>
-            <!-- body -->
-            <path d="M70 210
-                     C72 168 120 150 170 142
-                     C210 110 250 92 320 90
-                     C400 88 450 104 500 140
-                     C560 148 620 160 650 186
-                     C664 190 672 198 672 210
-                     L672 214 C672 222 666 226 656 226
-                     L64 226 C56 226 52 220 52 212
-                     C52 210 60 210 70 210 Z"
-                  fill="var(--accent)"/>
-            <!-- roof highlight -->
-            <path d="M205 138 C240 104 270 92 322 90 C398 88 448 104 496 138
-                     C430 128 300 128 205 138 Z" fill="#ef2a44" opacity="0.9"/>
-            <!-- greenhouse / windows -->
-            <path d="M225 135 C252 112 278 100 320 99 L320 132 Z" fill="#11131a"/>
-            <path d="M332 99 C398 100 440 112 482 134 L332 132 Z" fill="#11131a"/>
-            <rect x="322" y="99" width="8" height="33" fill="var(--accent)"/>
-            <!-- door line + handle -->
-            <path d="M330 136 L330 205" stroke="#8d0013" stroke-width="2"/>
-            <rect x="360" y="150" width="22" height="5" rx="2" fill="#2a0008"/>
-            <!-- ducktail hint -->
-            <path d="M500 140 C540 138 566 146 584 160 L560 164 C540 150 520 144 500 148 Z" fill="#b60018"/>
-            <!-- side sill -->
-            <rect x="120" y="204" width="470" height="10" rx="4" fill="#8d0013"/>
-            <!-- head/tail lights -->
-            <circle cx="648" cy="196" r="9" fill="#ffd34d"/>
-            <ellipse cx="78" cy="196" rx="9" ry="11" fill="#ffe9a6"/>
-            <!-- wheels (Fuchs style) -->
-            <g>
-              <circle cx="178" cy="214" r="46" fill="#0c0d10"/>
-              <circle cx="178" cy="214" r="45" fill="none" stroke="#2b2f38" stroke-width="2"/>
-              <circle cx="178" cy="214" r="27" fill="#20232b"/>
-              <circle cx="178" cy="214" r="9" fill="#9aa2b1"/>
-              <g stroke="#565d6b" stroke-width="5">
-                <line x1="178" y1="190" x2="178" y2="238"/>
-                <line x1="154" y1="214" x2="202" y2="214"/>
-                <line x1="161" y1="197" x2="195" y2="231"/>
-                <line x1="195" y1="197" x2="161" y2="231"/>
-              </g>
-            </g>
-            <g>
-              <circle cx="560" cy="214" r="46" fill="#0c0d10"/>
-              <circle cx="560" cy="214" r="45" fill="none" stroke="#2b2f38" stroke-width="2"/>
-              <circle cx="560" cy="214" r="27" fill="#20232b"/>
-              <circle cx="560" cy="214" r="9" fill="#9aa2b1"/>
-              <g stroke="#565d6b" stroke-width="5">
-                <line x1="560" y1="190" x2="560" y2="238"/>
-                <line x1="536" y1="214" x2="584" y2="214"/>
-                <line x1="543" y1="197" x2="577" y2="231"/>
-                <line x1="577" y1="197" x2="543" y2="231"/>
-              </g>
-            </g>
-          </svg>
-        </div>
-        <div class="floor"></div>
-        <span class="plate">964 · WHS-4</span>
+      <a href="#home" class="brand">LEE<b>·</b>SEUNGHWAN</a>
+      <button class="menu-btn" aria-label="메뉴" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+      <div class="nav-links" id="navLinks">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#honors">Honors</a>
+        <a href="#contact">Contact</a>
       </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero" id="home">
+    <div class="wrap">
+      <img class="avatar" src="{{ p.hero.photo }}" alt="{{ p.hero.name }}"
+           onerror="this.src='https://placehold.co/120x120/15171c/d5001c?text=PHOTO'">
+      <div class="neon">{{ p.hero.name }}</div>
+      <p class="tag">{{ p.hero.tagline }}</p>
+
+      <!-- Porsche 964 -->
+      <div class="stage">
+        <svg viewBox="0 0 720 260" role="img" aria-label="Porsche 964">
+          <ellipse cx="360" cy="226" rx="290" ry="14" fill="#000" opacity="0.45"/>
+          <path d="M70 190 C72 150 120 134 170 126 C210 94 250 78 320 76 C400 74 450 90 500 124
+                   C560 132 620 144 650 168 C664 172 672 180 672 192 L672 196 C672 204 666 208 656 208
+                   L64 208 C56 208 52 202 52 194 C52 192 60 192 70 192 Z" fill="var(--accent)"/>
+          <path d="M205 122 C240 90 270 78 322 76 C398 74 448 90 496 122 C430 112 300 112 205 122 Z" fill="#ef2a44" opacity="0.9"/>
+          <path d="M225 119 C252 96 278 84 320 83 L320 116 Z" fill="#11131a"/>
+          <path d="M332 83 C398 84 440 96 482 118 L332 116 Z" fill="#11131a"/>
+          <rect x="322" y="83" width="8" height="33" fill="var(--accent)"/>
+          <rect x="120" y="186" width="470" height="10" rx="4" fill="#8d0013"/>
+          <circle cx="648" cy="178" r="9" fill="#ffd34d"/>
+          <ellipse cx="78" cy="178" rx="9" ry="11" fill="#ffe9a6"/>
+          <g>
+            <circle cx="178" cy="196" r="44" fill="#0c0d10"/><circle cx="178" cy="196" r="26" fill="#20232b"/>
+            <circle cx="178" cy="196" r="8" fill="#9aa2b1"/>
+            <g stroke="#565d6b" stroke-width="5"><line x1="178" y1="174" x2="178" y2="218"/><line x1="156" y1="196" x2="200" y2="196"/><line x1="162" y1="180" x2="194" y2="212"/><line x1="194" y1="180" x2="162" y2="212"/></g>
+          </g>
+          <g>
+            <circle cx="560" cy="196" r="44" fill="#0c0d10"/><circle cx="560" cy="196" r="26" fill="#20232b"/>
+            <circle cx="560" cy="196" r="8" fill="#9aa2b1"/>
+            <g stroke="#565d6b" stroke-width="5"><line x1="560" y1="174" x2="560" y2="218"/><line x1="538" y1="196" x2="582" y2="196"/><line x1="544" y1="180" x2="576" y2="212"/><line x1="576" y1="180" x2="544" y2="212"/></g>
+          </g>
+        </svg>
+      </div>
+      <span class="plate">964 · WHS-4</span>
     </div>
   </header>
 
@@ -235,133 +165,86 @@
 
     <!-- ABOUT -->
     <section id="about">
-      <div class="sec-head"><span class="tag">00 / PIT</span><h2>About</h2></div>
-      <p class="lead">사이버 보안을 공부하는 학생입니다. 악성코드 분석과 백신(AV/EDR) 우회 기법, 리버스 엔지니어링, 웹 해킹에 관심이 많습니다.
-      화이트햇 스쿨 4기에서 시스템 해킹·리버스 엔지니어링을 학습 중이며, 명지대학교에서 소프트웨어를 전공하고 있습니다.
-      <br><em>※ 세부 소개는 자유롭게 수정하세요.</em></p>
+      <div class="sec-head"><span class="tag">00 / PIT</span><h2>About Me</h2></div>
+      <p class="lead">{{ p.about }}</p>
     </section>
 
-    <!-- TECH STACK (PIT BOARD) -->
-    <section id="stack">
-      <div class="sec-head"><span class="tag">01 / TOOLS</span><h2>Tech Stack</h2></div>
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="sec-head"><span class="tag">01 / TOOLS</span><h2>Skills</h2></div>
       <div class="chips">
-        <span class="chip"><b>Lang</b> &nbsp;C</span>
-        <span class="chip">Rust</span>
-        <span class="chip">Python</span>
-        <span class="chip">Java</span>
-        <span class="chip">JavaScript</span>
-        <span class="chip"><b>Sec</b> &nbsp;x64dbg</span>
-        <span class="chip">IDA Pro</span>
-        <span class="chip">Ghidra</span>
-        <span class="chip">Reverse Engineering</span>
-        <span class="chip">Malware Analysis</span>
-        <span class="chip">AV / EDR Evasion</span>
-        <span class="chip"><b>Web</b> &nbsp;React</span>
-        <span class="chip">Docker</span>
-        <span class="chip">Git</span>
-        <span class="chip">Linux</span>
+        {%- for s in p.skills %}
+        <div class="chip-row">
+          <span class="label">{{ s.category }}</span>
+          {%- assign arr = s.items | split: "," -%}
+          {%- for it in arr %}<span class="chip">{{ it | strip }}</span>{%- endfor %}
+        </div>
+        {%- endfor %}
       </div>
     </section>
 
-    <!-- PROJECTS (GARAGE BAYS) -->
+    <!-- PROJECTS -->
     <section id="projects">
       <div class="sec-head"><span class="tag">02 / BAYS</span><h2>Projects</h2></div>
       <div class="grid">
+        {%- for proj in p.projects %}
         <div class="card">
-          <div class="meta">Rust · Security Research</div>
-          <h3>AV 우회기법 연구 (PoC)</h3>
-          <p>오픈소스 악성코드를 활용한 백신(AV) 탐지 우회 기법 연구 및 PoC 코드 개발.</p>
-          <a href="https://github.com/tortoiese/AV-practice" target="_blank" rel="noopener">AV-practice ↗</a>
+          {%- if proj.subtitle %}<div class="meta">{{ proj.subtitle }}</div>{%- endif %}
+          <h3>{{ proj.title }}</h3>
+          <p>{{ proj.description }}</p>
+          {%- if proj.link %}<a class="repo" href="{{ proj.link }}" target="_blank" rel="noopener">자세히 보기 ↗</a>{%- endif %}
         </div>
-        <div class="card">
-          <div class="meta">JavaScript · CTF</div>
-          <h3>MSGCTF 프론트엔드</h3>
-          <p>명지대 보안 동아리(MJSEC) CTF 플랫폼 프론트엔드 개발 참여.</p>
-          <a href="https://github.com/tortoiese/mjsecvacation" target="_blank" rel="noopener">mjsecvacation ↗</a>
-        </div>
-        <div class="card">
-          <div class="meta">Java · Hackathon</div>
-          <h3>멋쟁이사자들 해커톤</h3>
-          <p>멋쟁이사자처럼(멋사) 해커톤 참여 — 팀 프로젝트 기획 및 개발.</p>
-          <a href="https://github.com/tortoiese/lion" target="_blank" rel="noopener">lion ↗</a>
-        </div>
-        <div class="card">
-          <div class="meta">Simulation · Capstone</div>
-          <h3>캡스톤: 로봇 스케줄링 최적화</h3>
-          <p>명지대학교 캡스톤 디자인 — 이산사건 시뮬레이터 기반 로봇 스케줄링 최적화 프로젝트.</p>
-          <a href="https://github.com/tortoiese" target="_blank" rel="noopener">repo 링크 추가 ↗</a>
-        </div>
-        <div class="card">
-          <div class="meta">Python · Docker</div>
-          <h3>kr-vulhub</h3>
-          <p>docker-compose 기반 취약 환경 구성·검증 (Vulhub 한글판) 번역/정리.</p>
-          <a href="https://github.com/tortoiese/kr-vulhub" target="_blank" rel="noopener">kr-vulhub ↗</a>
-        </div>
-        <div class="card">
-          <div class="meta">Python · Team</div>
-          <h3>CLOVER</h3>
-          <p>팀 프로젝트 (설명 추가 예정).</p>
-          <a href="https://github.com/tortoiese/CLOVER" target="_blank" rel="noopener">CLOVER ↗</a>
-        </div>
+        {%- endfor %}
       </div>
     </section>
 
-    <!-- BOOTCAMP / 부트캠프 이력 -->
-    <section id="bootcamp">
-      <div class="sec-head"><span class="tag">03 / LOG</span><h2>부트캠프 · 이력</h2></div>
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <div class="sec-head"><span class="tag">03 / LOG</span><h2>Experience &amp; Education</h2></div>
       <div class="tl">
+        {%- for e in p.experience %}
         <div class="item">
-          <div class="when">2026</div>
-          <h4>화이트햇 스쿨 4기 (WHS 4th)</h4>
-          <p>시스템 해킹, 리버스 엔지니어링, 웹 해킹, 시큐어 코딩, DevSecOps 등 실무 보안 교육 수료 과정.</p>
+          <div class="when">{{ e.period }}</div>
+          <h4>{{ e.title }}</h4>
+          {%- if e.description %}<p>{{ e.description }}</p>{%- endif %}
         </div>
-        <div class="item">
-          <div class="when">연도 입력</div>
-          <h4>멋쟁이사자처럼 (LIKELION)</h4>
-          <p>웹 개발 부트캠프 / 해커톤 활동. (기간·역할 수정)</p>
-        </div>
-        <div class="item">
-          <div class="when">재학</div>
-          <h4>명지대학교</h4>
-          <p>소프트웨어 전공 (전공/학번 수정). 캡스톤 디자인 프로젝트 수행.</p>
-        </div>
+        {%- endfor %}
       </div>
     </section>
 
-    <!-- AWARDS / 수상경력 -->
-    <section id="awards">
-      <div class="sec-head"><span class="tag">04 / TROPHY</span><h2>수상 경력</h2></div>
+    <!-- HONORS -->
+    <section id="honors">
+      <div class="sec-head"><span class="tag">04 / CERT</span><h2>Honors &amp; Certifications</h2></div>
       <div class="rows">
-        <div class="row"><div><div class="name">수상명 입력</div><div class="sub">대회/주최 · 등수</div></div><div class="yr">연도</div></div>
-        <div class="row"><div><div class="name">수상명 입력</div><div class="sub">대회/주최 · 등수</div></div><div class="yr">연도</div></div>
-        <div class="row"><div><div class="name">수상명 입력</div><div class="sub">대회/주최 · 등수</div></div><div class="yr">연도</div></div>
-      </div>
-    </section>
-
-    <!-- CERTIFICATIONS / 자격증 -->
-    <section id="certs">
-      <div class="sec-head"><span class="tag">05 / CERT</span><h2>자격증</h2></div>
-      <div class="rows">
-        <div class="row"><div><div class="name">자격증명 입력</div><div class="sub">발급기관</div></div><div class="yr">취득연도</div></div>
-        <div class="row"><div><div class="name">자격증명 입력</div><div class="sub">발급기관</div></div><div class="yr">취득연도</div></div>
+        {%- for h in p.honors %}
+        <div class="row">
+          <div><div class="name">{{ h.title }}</div>{%- if h.issuer %}<div class="sub">{{ h.issuer }}</div>{%- endif %}</div>
+          {%- if h.date %}<div class="yr">{{ h.date }}</div>{%- endif %}
+        </div>
+        {%- endfor %}
       </div>
     </section>
 
     <!-- CONTACT -->
     <section id="contact">
-      <div class="sec-head"><span class="tag">06 / RADIO</span><h2>Contact</h2></div>
+      <div class="sec-head"><span class="tag">05 / RADIO</span><h2>Contact</h2></div>
       <p class="lead">연락 및 협업 제안은 아래로 편하게 주세요.</p>
       <div class="contact">
-        <a href="https://github.com/tortoiese" target="_blank" rel="noopener">🐙 GitHub @tortoiese</a>
-        <a href="mailto:이메일입력@example.com">✉️ Email</a>
-        <a href="#" target="_blank" rel="noopener">🔗 Blog / LinkedIn</a>
+        {%- if p.contact.email %}<a href="mailto:{{ p.contact.email }}">✉️ {{ p.contact.email }}</a>{%- endif %}
+        {%- if p.contact.blog %}<a href="{{ p.contact.blog }}" target="_blank" rel="noopener">📝 Tech Blog</a>{%- endif %}
+        <a href="https://github.com/tortoiese" target="_blank" rel="noopener">🐙 GitHub</a>
       </div>
     </section>
   </main>
 
-  <footer>
-    © 2026 이승환 (Lee Seung-hwan) · The Garage · WHS 4th
-  </footer>
+  <footer>© 2026 {{ p.hero.name }} · The Garage · WHS 4th</footer>
   <div class="hazard"></div>
+
+  <script>
+    // 모바일 메뉴 클릭 시 닫기
+    document.querySelectorAll('.nav-links a').forEach(function(a){
+      a.addEventListener('click',function(){document.getElementById('navLinks').classList.remove('open')});
+    });
+  </script>
 </body>
 </html>
