@@ -158,7 +158,6 @@
         <a class="nav-a" data-view="experience">Experience</a>
         <a class="nav-a" data-view="honors">Honors</a>
         <a class="nav-a" data-view="contact">Contact</a>
-        <a class="nav-a" data-view="ctf">CTF</a>
         <span class="nav-turtle" id="navTurtle">{{ turtle }}</span>
       </nav>
     </div>
@@ -258,22 +257,6 @@
           {%- if p.contact.email %}<a href="mailto:{{ p.contact.email }}">✉️ {{ p.contact.email }}</a>{%- endif %}
           {%- if p.contact.blog %}<a href="{{ p.contact.blog }}" target="_blank" rel="noopener">📝 Tech Blog</a>{%- endif %}
           <a href="https://github.com/tortoiese" target="_blank" rel="noopener">🐙 GitHub</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTF -->
-    <section class="view" data-view="ctf">
-      <div class="pad">
-        <div class="sec-head"><span class="dot">{{ turtle }}</span><h2>CTF</h2></div>
-        <p class="lead" style="margin-bottom:16px;">msgctf.kr 연습 플랫폼</p>
-        <div style="border:1px solid var(--line);border-radius:14px;overflow:hidden;height:80vh">
-          <iframe src="https://msgctf.kr"
-                  style="width:100%;height:100%;border:none;"
-                  title="msgctf.kr"
-                  loading="lazy"
-                  sandbox="allow-scripts allow-same-origin allow-forms allow-popups">
-          </iframe>
         </div>
       </div>
     </section>
