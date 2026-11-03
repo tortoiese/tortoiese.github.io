@@ -1,0 +1,308 @@
+---
+# Jekyll이 처리합니다. 내용은 _data/portfolio.yml 에서 불러옵니다.
+---
+{%- assign p = site.data.portfolio -%}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ p.hero.name }} | tortoiese</title>
+  <meta name="description" content="{{ p.hero.tagline }}">
+  <style>
+    :root{
+      --bg:#ffffff;
+      --panel:#f4fbf6;
+      --panel2:#e9f7ef;
+      --line:#d8ebe0;
+      --ink:#1d2b24;
+      --muted:#5f7468;
+      --green:#2e9e5b;
+      --green-dark:#1b7a43;
+      --green-deep:#145c33;
+      --shell:#6f9a3a;
+      --nav-h:62px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:"Segoe UI","Malgun Gothic",-apple-system,sans-serif;
+      background:var(--bg);color:var(--ink);line-height:1.75;-webkit-font-smoothing:antialiased;
+      min-height:100vh;position:relative;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:900px;margin:0 auto;padding:0 20px}
+
+    /* scattered turtle background */
+    .deco{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+    .deco svg{position:absolute;opacity:.07}
+    .deco .t1{width:150px;top:16%;left:-30px;transform:rotate(-12deg)}
+    .deco .t2{width:110px;top:40%;right:-20px;transform:rotate(18deg)}
+    .deco .t3{width:130px;bottom:8%;left:6%;transform:rotate(8deg)}
+    .deco .t4{width:90px;top:70%;right:14%;transform:rotate(-20deg)}
+
+    /* ===== NAV ===== */
+    header.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);
+      backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+    .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:var(--nav-h);flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+    .brand{display:flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.5px;color:var(--green-deep);font-size:1.15rem}
+    .brand svg{width:30px;height:auto}
+    .menu{position:relative;display:flex;flex-wrap:wrap;gap:4px;padding-bottom:16px}
+    .nav-a{padding:8px 13px;border-radius:9px;font-size:.92rem;font-weight:700;color:var(--muted);transition:.15s;cursor:pointer}
+    .nav-a:hover{color:var(--green-deep);background:var(--panel2)}
+    .nav-a.active{color:#fff;background:var(--green)}
+    /* walking turtle indicator */
+    .nav-turtle{position:absolute;left:0;top:0;width:30px;height:auto;z-index:2;
+      transition:transform .6s cubic-bezier(.34,1.3,.5,1)}
+    .nav-turtle.walking{animation:waddle .22s linear infinite}
+    @keyframes waddle{0%,100%{rotate:-7deg}50%{rotate:7deg}}
+
+    /* ===== VIEW / SECTIONS ===== */
+    main{position:relative;z-index:1}
+    .view{display:none;animation:fade .45s ease}
+    .view.active{display:block}
+    @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+    .pad{padding:46px 0 70px}
+
+    .sec-head{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+    .sec-head .dot{width:28px;height:28px;flex:0 0 auto}
+    .sec-head h2{font-size:1.6rem;letter-spacing:-.5px;color:var(--green-deep)}
+    .lead{color:var(--muted);max-width:720px;font-size:1.05rem}
+
+    /* HOME hero */
+    .hero{text-align:center;padding:40px 0 24px}
+    .photo{width:270px;max-width:78vw;aspect-ratio:3/4;object-fit:cover;border-radius:16px;
+      border:5px solid #fff;box-shadow:0 14px 40px rgba(20,92,51,.18),0 0 0 2px var(--line);background:#eef6f0}
+    .hero h1{font-size:2.3rem;margin-top:22px;letter-spacing:-1px}
+    .hero .tagline{color:var(--green-dark);font-weight:600;margin-top:6px;font-size:1.08rem}
+    .hero .hi{display:inline-flex;align-items:center;gap:8px;margin-top:18px;background:var(--panel2);
+      border:1px solid var(--line);border-radius:999px;padding:7px 16px;color:var(--green-deep);font-weight:700;font-size:.9rem}
+    .hero .hi svg{width:22px}
+
+    /* cards */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;
+      border-top:4px solid var(--green);transition:.2s;position:relative}
+    .card:hover{transform:translateY(-4px);box-shadow:0 12px 26px rgba(20,92,51,.12)}
+    .card h3{font-size:1.1rem;margin-bottom:3px;color:var(--green-deep)}
+    .card .meta{font-size:.76rem;color:var(--green);font-weight:800;letter-spacing:1px;text-transform:uppercase}
+    .card p{color:var(--muted);font-size:.93rem;margin:8px 0 10px}
+    .card a.repo{font-size:.84rem;color:var(--green-dark);font-weight:700;border-bottom:1px dashed var(--green)}
+    .card a.repo:hover{color:var(--green-deep)}
+
+    .chips{display:grid;gap:16px}
+    .chip-row{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+    .chip-row .label{font-size:.82rem;font-weight:800;color:var(--green-deep);min-width:130px}
+    .chip{background:#fff;border:1.5px solid var(--line);padding:7px 14px;border-radius:999px;font-size:.86rem;font-weight:600;color:var(--ink)}
+
+    .tl{border-left:3px solid var(--panel2);margin-left:10px;padding-left:24px}
+    .tl .item{position:relative;padding:4px 0 22px}
+    .tl .item::before{content:"";position:absolute;left:-33px;top:7px;width:14px;height:14px;background:var(--green);border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px var(--green)}
+    .tl .when{font-size:.8rem;color:var(--green);font-weight:800;letter-spacing:.5px}
+    .tl h4{font-size:1.1rem;margin:2px 0;color:var(--green-deep)}
+    .tl p{color:var(--muted);font-size:.93rem}
+
+    .rows{display:grid;gap:11px}
+    .row{display:flex;justify-content:space-between;align-items:center;gap:14px;
+      background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+    .row .name{font-weight:700;color:var(--green-deep)}
+    .row .sub{color:var(--muted);font-size:.86rem}
+    .row .yr{color:var(--green);font-weight:800;font-size:.88rem;white-space:nowrap}
+
+    .contact{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px}
+    .contact a{display:inline-flex;align-items:center;gap:9px;background:#fff;border:1.5px solid var(--line);
+      padding:13px 20px;border-radius:12px;font-weight:700;color:var(--green-deep);transition:.2s}
+    .contact a:hover{border-color:var(--green);background:var(--panel2);transform:translateY(-2px)}
+
+    footer{text-align:center;color:var(--muted);font-size:.84rem;padding:26px 0;border-top:1px solid var(--line);position:relative;z-index:1}
+    footer svg{width:26px;vertical-align:middle;margin-right:6px}
+
+    @media(max-width:640px){
+      .hero h1{font-size:1.9rem}
+      .chip-row .label{min-width:100%}
+      .brand{font-size:1rem}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== decorative turtles ===== -->
+  <div class="deco" aria-hidden="true">
+    {% capture turtle %}
+    <svg viewBox="0 0 140 92"><g>
+      <ellipse cx="48" cy="72" rx="10" ry="8" fill="#2e9e5b"/>
+      <ellipse cx="92" cy="72" rx="10" ry="8" fill="#2e9e5b"/>
+      <path d="M118 54 l16 6 -16 6z" fill="#2e9e5b"/>
+      <circle cx="26" cy="54" r="15" fill="#34ad64"/>
+      <circle cx="19" cy="50" r="2.6" fill="#0e2e1c"/>
+      <ellipse cx="74" cy="66" rx="48" ry="15" fill="#2e9e5b"/>
+      <path d="M30 64 a46 40 0 0 1 90 0 z" fill="#6f9a3a"/>
+      <path d="M30 64 a46 40 0 0 1 90 0" fill="none" stroke="#4f7326" stroke-width="3"/>
+      <path d="M75 26 L75 64 M53 32 L39 61 M97 32 L111 61 M45 48 H105" stroke="#4f7326" stroke-width="2.4" fill="none"/>
+      <polygon points="75,37 88,47 82,60 68,60 62,47" fill="#89b94d" stroke="#4f7326" stroke-width="2"/>
+    </g></svg>
+    {% endcapture %}
+    <span class="t1">{{ turtle }}</span>
+    <span class="t2">{{ turtle }}</span>
+    <span class="t3">{{ turtle }}</span>
+    <span class="t4">{{ turtle }}</span>
+  </div>
+
+  <!-- ===== NAV ===== -->
+  <header class="topbar">
+    <div class="wrap bar">
+      <a class="brand" data-view="home">{{ turtle }} tortoiese</a>
+      <nav class="menu" id="menu">
+        <a class="nav-a active" data-view="home">Home</a>
+        <a class="nav-a" data-view="about">About</a>
+        <a class="nav-a" data-view="skills">Skills</a>
+        <a class="nav-a" data-view="projects">Projects</a>
+        <a class="nav-a" data-view="experience">Experience</a>
+        <a class="nav-a" data-view="honors">Honors</a>
+        <a class="nav-a" data-view="contact">Contact</a>
+        <span class="nav-turtle" id="navTurtle">{{ turtle }}</span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- HOME -->
+    <section class="view active" data-view="home">
+      <div class="hero pad">
+        <img class="photo" src="{{ p.hero.photo }}" alt="{{ p.hero.name }}"
+             onerror="this.src='https://placehold.co/270x360/ffffff/2e9e5b?text=PHOTO'">
+        <h1>{{ p.hero.name }}</h1>
+        <p class="tagline">{{ p.hero.tagline }}</p>
+        <span class="hi">{{ turtle }} tortoiese 의 자기소개 페이지</span>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="view" data-view="about">
+      <div class="pad">
+        <div class="sec-head"><span class="dot">{{ turtle }}</span><h2>About Me</h2></div>
+        <p class="lead">{{ p.about }}</p>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="view" data-view="skills">
+      <div class="pad">
+        <div class="sec-head"><span class="dot">{{ turtle }}</span><h2>Skills</h2></div>
+        <div class="chips">
+          {%- for s in p.skills %}
+          <div class="chip-row">
+            <span class="label">{{ s.category }}</span>
+            {%- assign arr = s.items | split: "," -%}
+            {%- for it in arr %}<span class="chip">{{ it | strip }}</span>{%- endfor %}
+          </div>
+          {%- endfor %}
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="view" data-view="projects">
+      <div class="pad">
+        <div class="sec-head"><span class="dot">{{ turtle }}</span><h2>Projects</h2></div>
+        <div class="grid">
+          {%- for proj in p.projects %}
+          <div class="card">
+            {%- if proj.subtitle %}<div class="meta">{{ proj.subtitle }}</div>{%- endif %}
+            <h3>{{ proj.title }}</h3>
+            <p>{{ proj.description }}</p>
+            {%- if proj.link %}<a class="repo" href="{{ proj.link }}" target="_blank" rel="noopener">자세히 보기 ↗</a>{%- endif %}
+          </div>
+          {%- endfor %}
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="view" data-view="experience">
+      <div class="pad">
+        <div class="sec-head"><span class="dot">{{ turtle }}</span><h2>Experience &amp; Education</h2></div>
+        <div class="tl">
+          {%- for e in p.experience %}
+          <div class="item">
+            <div class="when">{{ e.period }}</div>
+            <h4>{{ e.title }}</h4>
+            {%- if e.description %}<p>{{ e.description }}</p>{%- endif %}
+          </div>
+          {%- endfor %}
+        </div>
+      </div>
+    </section>
+
+    <!-- HONORS -->
+    <section class="view" data-view="honors">
+      <div class="pad">
+        <div class="sec-head"><span class="dot">{{ turtle }}</span><h2>Honors &amp; Certifications</h2></div>
+        <div class="rows">
+          {%- for h in p.honors %}
+          <div class="row">
+            <div><div class="name">{{ h.title }}</div>{%- if h.issuer %}<div class="sub">{{ h.issuer }}</div>{%- endif %}</div>
+            {%- if h.date %}<div class="yr">{{ h.date }}</div>{%- endif %}
+          </div>
+          {%- endfor %}
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="view" data-view="contact">
+      <div class="pad">
+        <div class="sec-head"><span class="dot">{{ turtle }}</span><h2>Contact</h2></div>
+        <p class="lead">연락 및 협업 제안은 아래로 편하게 주세요.</p>
+        <div class="contact">
+          {%- if p.contact.email %}<a href="mailto:{{ p.contact.email }}">✉️ {{ p.contact.email }}</a>{%- endif %}
+          {%- if p.contact.blog %}<a href="{{ p.contact.blog }}" target="_blank" rel="noopener">📝 Tech Blog</a>{%- endif %}
+          <a href="https://github.com/tortoiese" target="_blank" rel="noopener">🐙 GitHub</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>{{ turtle }} © 2026 {{ p.hero.name }} · tortoiese</footer>
+
+  <script>
+    (function(){
+      var menu=document.getElementById('menu');
+      var turtle=document.getElementById('navTurtle');
+      var links=[].slice.call(document.querySelectorAll('.nav-a'));
+      var views=[].slice.call(document.querySelectorAll('.view'));
+      var clickable=[].slice.call(document.querySelectorAll('.nav-a, .brand'));
+
+      function moveTurtle(link){
+        var tx=link.offsetLeft+link.offsetWidth/2-turtle.offsetWidth/2;
+        var ty=link.offsetTop+link.offsetHeight-8;
+        turtle.style.transform='translate('+tx+'px,'+ty+'px)';
+        turtle.classList.add('walking');
+        clearTimeout(turtle._t);
+        turtle._t=setTimeout(function(){turtle.classList.remove('walking');},650);
+      }
+      function show(name,animate){
+        var link=links.filter(function(a){return a.dataset.view===name;})[0]||links[0];
+        views.forEach(function(v){v.classList.toggle('active',v.dataset.view===name);});
+        links.forEach(function(a){a.classList.toggle('active',a===link);});
+        if(!animate){turtle.style.transition='none';}
+        moveTurtle(link);
+        if(!animate){requestAnimationFrame(function(){turtle.style.transition='';});}
+        window.scrollTo({top:0,behavior:animate?'smooth':'auto'});
+        history.replaceState(null,'',name==='home'?'#':'#'+name);
+      }
+      clickable.forEach(function(a){
+        a.addEventListener('click',function(e){e.preventDefault();show(a.dataset.view,true);});
+      });
+      window.addEventListener('resize',function(){
+        var a=links.filter(function(x){return x.classList.contains('active');})[0];
+        if(a){turtle.style.transition='none';moveTurtle(a);requestAnimationFrame(function(){turtle.style.transition='';});}
+      });
+      // init
+      var start=(location.hash||'').replace('#','')||'home';
+      if(!links.some(function(a){return a.dataset.view===start;}))start='home';
+      window.addEventListener('load',function(){show(start,false);});
+    })();
+  </script>
+</body>
+</html>
