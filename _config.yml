@@ -1,5 +1,5 @@
 title: 이승환 | Portfolio
-description: 정보보안과 개발을 공부하는 학생입니다.
+description: 정보보안을 공부하는 프론트엔드 개발자
 lang: ko
 
 # GitHub Pages가 Jekyll로 빌드합니다.
@@ -12,6 +12,7 @@ exclude:
   - wrangler.toml
   - src
   - node_modules
+  - template          # 새 디자인 원본(플레이스홀더 버전) — 배포 제외
 
 # 마크다운 엔진
 markdown: kramdown

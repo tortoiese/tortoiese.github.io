@@ -20,59 +20,78 @@ collections:
         label: 전체 내용
         file: _data/portfolio.yml
         fields:
-          - label: Hero (첫 화면)
-            name: hero
+          - label: 첫 화면 (Hero)
+            name: site
             widget: object
             fields:
-              - { label: 이름, name: name, widget: string }
-              - { label: 한 줄 소개, name: tagline, widget: string }
+              - { label: "핸들 (헤더 로고 + 큰 글씨)", name: handle, widget: string }
+              - { label: 이름 (한글), name: name_ko, widget: string }
+              - { label: 이름 (영문), name: name_en, widget: string, required: false }
+              - { label: 한 줄 소개, name: title, widget: string }
+              - label: 소개 문장
+                name: intro
+                widget: list
+                field: { label: 문장, name: line, widget: string }
               - { label: 프로필 사진, name: photo, widget: image, required: false }
 
-          - { label: About Me (자기소개), name: about, widget: text }
+          - label: 링크
+            name: links
+            widget: object
+            fields:
+              - { label: GitHub URL, name: github, widget: string, required: false }
+              - { label: 블로그 URL, name: blog, widget: string, required: false }
+              - { label: 이메일, name: email, widget: string, required: false }
+              - { label: LinkedIn URL, name: linkedin, widget: string, required: false, hint: "비워두면 표시되지 않습니다." }
 
-          - label: Skills (기술 스택)
+          - label: 프로젝트 (최신순)
+            name: projects
+            widget: list
+            label_singular: 프로젝트
+            summary: "{{fields.name}}"
+            fields:
+              - { label: 이름, name: name, widget: string }
+              - { label: 부제, name: subtitle, widget: string, required: false }
+              - { label: 상태, name: status, widget: string, required: false, hint: "예) 진행 중 — 비워두면 표시 안 됨" }
+              - { label: 기간, name: period, widget: string, required: false, hint: "예) 2026.03 ~ 2026.06" }
+              - { label: 설명, name: desc, widget: text }
+              - { label: 맡은 일, name: role, widget: string, required: false }
+              - { label: 기술, name: stack, widget: string, required: false, hint: "예) React / Vite / axios" }
+              - { label: GitHub 링크, name: github, widget: string, required: false }
+              - { label: 데모 링크, name: demo, widget: string, required: false }
+
+          - label: 활동 · 수상 · 자격증
+            name: activities
+            widget: list
+            label_singular: 항목
+            summary: "{{fields.name}}"
+            fields:
+              - { label: 이름, name: name, widget: string }
+              - { label: 부제/기관, name: subtitle, widget: string, required: false }
+              - { label: 기간, name: period, widget: string, required: false }
+              - { label: 설명, name: desc, widget: text, required: false }
+
+          - label: 학력
+            name: education
+            widget: list
+            label_singular: 학교
+            summary: "{{fields.school}}"
+            fields:
+              - { label: 학교, name: school, widget: string }
+              - { label: 캠퍼스/계열, name: campus, widget: string, required: false }
+              - { label: 기간, name: period, widget: string, required: false }
+              - { label: 설명, name: desc, widget: text, required: false }
+
+          - label: 보유기술
             name: skills
             widget: list
-            label_singular: 스킬 분류
+            label_singular: 기술 분류
             summary: "{{fields.category}}"
             fields:
               - { label: 분류, name: category, widget: string }
               - { label: 항목, name: items, widget: string, hint: "쉼표(,)로 구분해서 입력하세요. 예) Python, C, Rust" }
 
-          - label: Projects (프로젝트)
-            name: projects
-            widget: list
-            label_singular: 프로젝트
-            summary: "{{fields.title}}"
-            fields:
-              - { label: 제목, name: title, widget: string }
-              - { label: 부제, name: subtitle, widget: string, required: false }
-              - { label: 설명, name: description, widget: text }
-              - { label: 링크, name: link, widget: string, required: false }
-
-          - label: Experience & Education (경력·학력)
-            name: experience
-            widget: list
-            label_singular: 항목
-            summary: "{{fields.title}}"
-            fields:
-              - { label: 제목, name: title, widget: string }
-              - { label: 기간, name: period, widget: string }
-              - { label: 설명, name: description, widget: text, required: false }
-
-          - label: Honors & Certifications (수상·자격증)
-            name: honors
-            widget: list
-            label_singular: 항목
-            summary: "{{fields.title}}"
-            fields:
-              - { label: 제목, name: title, widget: string }
-              - { label: 발급기관, name: issuer, widget: string, required: false }
-              - { label: 날짜, name: date, widget: string, required: false }
-
-          - label: Contact (연락처)
+          - label: Contact
             name: contact
             widget: object
             fields:
-              - { label: 이메일, name: email, widget: string }
-              - { label: 블로그, name: blog, widget: string, required: false }
+              - { label: 안내 문구, name: lead, widget: string, required: false }
