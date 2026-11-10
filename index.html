@@ -110,7 +110,7 @@
           {%- endif %}
           <h3 class="item-title"><strong>{{ item.name | escape }}</strong>{% if item.subtitle and item.subtitle != "" %} <span>{{ item.subtitle | escape }}</span>{% endif %}</h3>
           {%- if item.desc and item.desc != "" %}
-          <p class="item-desc">{{ item.desc | escape }}</p>
+          <p class="item-desc">{{ item.desc | escape | newline_to_br }}</p>
           {%- endif %}
           {%- assign lk = item.github | append: item.demo %}
           {%- for x in item.links %}{% assign lk = lk | append: x.url %}{% endfor %}
@@ -202,7 +202,7 @@
           <div>
             <h3 class="item-title"><strong>{{ item.name | escape }}</strong>{% if item.subtitle and item.subtitle != "" %} <span>{{ item.subtitle | escape }}</span>{% endif %}</h3>
             {%- if item.desc and item.desc != "" %}
-            <p class="item-desc">{{ item.desc | escape }}</p>
+            <p class="item-desc">{{ item.desc | escape | newline_to_br }}</p>
             {%- endif %}
           </div>
         </li>
@@ -221,7 +221,7 @@
           <div>
             <h3 class="item-title"><strong>{{ c.name | escape }}</strong>{% if c.issuer and c.issuer != "" %} <span>{{ c.issuer | escape }}</span>{% endif %}</h3>
             {%- if c.desc and c.desc != "" %}
-            <p class="item-desc">{{ c.desc | escape }}</p>
+            <p class="item-desc">{{ c.desc | escape | newline_to_br }}</p>
             {%- endif %}
             {%- if c.file and c.file != "" %}{% if c.file contains "://" %}{% assign cfile = c.file %}{% else %}{% assign cfile = c.file | relative_url %}{% endif %}{% else %}{% assign cfile = "" %}{% endif %}
             {%- if c.image and c.image != "" %}
@@ -251,7 +251,7 @@
           <div>
             <h3 class="item-title"><strong>{{ item.school | escape }}</strong>{% if item.campus and item.campus != "" %} <span>{{ item.campus | escape }}</span>{% endif %}</h3>
             {%- if item.desc and item.desc != "" %}
-            <p class="item-desc">{{ item.desc | escape }}</p>
+            <p class="item-desc">{{ item.desc | escape | newline_to_br }}</p>
             {%- endif %}
           </div>
         </li>
