@@ -17,15 +17,16 @@ projects:
   - period: 2026.07 ~ 2026.11
     demo: ""
     github: https://github.com/MSG-CTF
-    links:
-      - label: 대회 기록
-        url: https://msg-ctf.github.io/
     stack: React / Vite / axios / Spring Boot (Backend)
     name: MSG CTF
-    desc: 모두의 마블 스타일의 보드게임 형태로 문제를 풀어가는 웹 기반 CTF 플랫폼입니다. 2026.11.08 대회를 운영했습니다 (75팀 · 150명 참가).
+    desc: 모두의 마블 스타일의 보드게임 형태로 문제를 풀어가는 웹 기반 CTF 플랫폼입니다. 2026.11.08 대회를 운영했습니다 (75팀
+      · 150명 참가).
     status: 대회 종료
     role: 프론트엔드 개발 · 웹 디자인 · Figma 설계
     subtitle: 웹 기반 CTF 플랫폼
+    links:
+      - label: 대회 기록
+        url: https://msg-ctf.github.io/
   - period: 2026.08 ~ 2026.11
     demo: ""
     github: https://github.com/VOID-wh4
@@ -38,25 +39,27 @@ projects:
   - period: 2026.07 ~ 2026.08
     demo: ""
     github: https://github.com/tortoiese/lion
-    documents:
-      - label: 해커톤 참가확인서
-        file: /assets/img/uploads/likelion14-hackathon-certificate.pdf
-        preview: /assets/img/uploads/likelion14-hackathon-certificate.png
     stack: "Spring, React, Vite, Tailwind, Figma "
     name: 멋쟁이사자처럼 중앙톤
     desc: 프론트엔드, 백엔드, 배포까지 전 과정을 직접 구현한 풀스택 개발 경험.
     status: ""
     role: PM & Fullstack
     subtitle: 멋쟁이사자처럼 대학 14기 해커톤 <ANIMAL LEAGUE> · 풀스택 개발
+    documents:
+      - label: 해커톤 참가확인서
+        file: /assets/img/uploads/likelion14-hackathon-certificate.pdf
+        preview: /assets/img/uploads/likelion14-hackathon-certificate.png
 activities:
   - name: MJSEC
     subtitle: 정보보안 동아리
-    period: 20XX.XX ~ 현재
-    desc: 스터디 멘토로 활동하고 있습니다.
+    period: 2026.03 ~ 현재
+    desc: 4.5기에 이어 현재 5기 스터디 멘토로 활동하고 있습니다.
   - name: WhiteHat School 4기
     subtitle: KISA(한국인터넷진흥원)
     period: 2026.06 ~ 2026.12
-    desc: ""
+    desc: |-
+      악성 페이로드를 이용한 백신 우회기법 개발 프로젝트를 진행 하였습니다.
+      개발한 우회기법 연구를 바탕으로 한국정보처리학회에 논문을 게재하였고 ACK 2026 에서 발표하였습니다.
 certs:
   - name: ADsP (데이터분석 준전문가)
     issuer: 한국데이터산업진흥원
