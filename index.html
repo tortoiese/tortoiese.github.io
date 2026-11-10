@@ -113,11 +113,13 @@
           {%- endif %}
           {%- assign lk = item.github | append: item.demo %}
           {%- for x in item.links %}{% assign lk = lk | append: x.url %}{% endfor %}
+          {%- for d in item.documents %}{% unless d.preview and d.preview != "" %}{% assign lk = lk | append: d.file %}{% endunless %}{% endfor %}
           {%- if lk != "" %}
           <p class="item-links">
             {%- if item.github and item.github != "" %}<a href="{{ item.github | escape }}" target="_blank" rel="noopener">GitHub</a>{% endif %}
             {%- if item.demo and item.demo != "" %}<a href="{{ item.demo | escape }}" target="_blank" rel="noopener">데모</a>{% endif %}
             {%- for x in item.links %}{% if x.url and x.url != "" %}<a href="{{ x.url | escape }}" target="_blank" rel="noopener">{% if x.label and x.label != "" %}{{ x.label | escape }}{% else %}링크{% endif %}</a>{% endif %}{% endfor %}
+            {%- for d in item.documents %}{% if d.file and d.file != "" %}{% unless d.preview and d.preview != "" %}{% if d.file contains "://" %}{% assign dsrc = d.file %}{% else %}{% assign dsrc = d.file | relative_url %}{% endif %}<a href="{{ dsrc | escape }}" target="_blank" rel="noopener">{{ d.label | default: "증빙 문서" | escape }} (PDF)</a>{% endunless %}{% endif %}{% endfor %}
           </p>
           {%- endif %}
           {%- assign fx = item.role | append: item.stack %}
@@ -156,9 +158,22 @@
           </div>
           {%- endif %}
 
-          {%- comment %} 증빙 사진: 썸네일을 누르면 원본이 새 탭에서 열립니다 {% endcomment %}
-          {%- if item.images and item.images.size > 0 %}
+          {%- comment %} 증빙 사진 + 미리보기가 있는 증빙 문서: 썸네일을 누르면 원본(사진/PDF)이 새 탭에서 열립니다 {% endcomment %}
+          {%- assign media_n = 0 %}
+          {%- for im in item.images %}{% if im.image and im.image != "" %}{% assign media_n = media_n | plus: 1 %}{% endif %}{% endfor %}
+          {%- for d in item.documents %}{% if d.file and d.file != "" and d.preview and d.preview != "" %}{% assign media_n = media_n | plus: 1 %}{% endif %}{% endfor %}
+          {%- if media_n > 0 %}
           <div class="item-media">
+            {%- for d in item.documents %}
+            {%- if d.file and d.file != "" and d.preview and d.preview != "" %}
+            {%- if d.file contains "://" %}{% assign dsrc = d.file %}{% else %}{% assign dsrc = d.file | relative_url %}{% endif %}
+            {%- if d.preview contains "://" %}{% assign psrc = d.preview %}{% else %}{% assign psrc = d.preview | relative_url %}{% endif %}
+            <figure class="is-doc">
+              <a href="{{ dsrc | escape }}" target="_blank" rel="noopener"><img src="{{ psrc | escape }}" alt="{{ d.label | default: item.name | escape }} 미리보기" loading="lazy"></a>
+              <figcaption>{{ d.label | default: "증빙 문서" | escape }} <span class="doc-tag">PDF</span></figcaption>
+            </figure>
+            {%- endif %}
+            {%- endfor %}
             {%- for im in item.images %}
             {%- if im.image and im.image != "" %}
             {%- if im.image contains "://" %}{% assign isrc = im.image %}{% else %}{% assign isrc = im.image | relative_url %}{% endif %}

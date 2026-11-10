@@ -14,33 +14,40 @@ links:
   email: albert419311@gmail.com
   linkedin: ""
 projects:
-  - period: "2026"
+  - period: 2026.07 ~ 2026.11
     demo: ""
     github: https://github.com/MSG-CTF
+    links:
+      - label: 대회 기록
+        url: https://msg-ctf.github.io/
     stack: React / Vite / axios / Spring Boot (Backend)
     name: MSG CTF
-    desc: 모두의 마블 스타일의 보드게임 형태로 문제를 풀어가는 웹 기반 CTF 플랫폼입니다.
-    status: 진행 중
+    desc: 모두의 마블 스타일의 보드게임 형태로 문제를 풀어가는 웹 기반 CTF 플랫폼입니다. 2026.11.08 대회를 운영했습니다 (75팀 · 150명 참가).
+    status: 대회 종료
     role: 프론트엔드 개발 · 웹 디자인 · Figma 설계
     subtitle: 웹 기반 CTF 플랫폼
   - period: 2026.08 ~ 2026.11
     demo: ""
-    github: https://github.com/tortoiese/AV-practice
+    github: https://github.com/VOID-wh4
     stack: C, RUST
     name: 화이트햇스쿨
     desc: 오픈소스 악성코드를 사용하여 백신(AV) 우회기법을 개발한 프로젝트입니다.
     status: ""
     role: AVAST 우회기법 개발(Earlybird APC injection,Sleep jitter)
     subtitle: 오픈소스 악성코드를 이용한 백신 우회기법 개발
-  - period: YYYY.MM ~ YYYY.MM
+  - period: 2026.07 ~ 2026.08
     demo: ""
     github: https://github.com/tortoiese/lion
+    documents:
+      - label: 해커톤 참가확인서
+        file: /assets/img/uploads/likelion14-hackathon-certificate.pdf
+        preview: /assets/img/uploads/likelion14-hackathon-certificate.png
     stack: "Spring, React, Vite, Tailwind, Figma "
     name: 멋쟁이사자처럼 중앙톤
     desc: 프론트엔드, 백엔드, 배포까지 전 과정을 직접 구현한 풀스택 개발 경험.
     status: ""
     role: PM & Fullstack
-    subtitle: 풀스택 개발
+    subtitle: 멋쟁이사자처럼 대학 14기 해커톤 <ANIMAL LEAGUE> · 풀스택 개발
 activities:
   - name: MJSEC
     subtitle: 정보보안 동아리

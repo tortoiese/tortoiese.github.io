@@ -297,6 +297,14 @@ a:hover { color: var(--accent); }
   background: var(--line);
 }
 .item-media a:hover img { border-color: var(--accent); }
+.item-media .is-doc img { object-position: top; }
+.doc-tag {
+  margin-left: 4px;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+}
 
 .item-videos {
   display: grid;
