@@ -1,12 +1,12 @@
 site:
-  handle: seunghwan
+  handle: TORTOIESE
   name_ko: 이승환
   name_en: Seung-Hwan Lee
-  title: 정보보안을 공부하는 프론트엔드 개발자
+  title: Student studying Cybersecurity
   intro:
-    - 명지대학교 정보통신공학과에서 공부하고 있습니다.
-    - MJSEC, WhiteHat School 4기에서 보안을 배우며 프론트엔드를 개발합니다.
-    - 리버싱, 웹해킹, 포너블, 악성코드 연구, 개발 등에 관심이 있습니다.
+    - 명지대학교 정보통신공학과에 재학중이며 MJSEC 보안 동아리 스터디 멘토로 활동중입니다.
+    - WhiteHat School 4기에서 악성페이로드를 이용한 AV우회기법 연구를 진행하였습니다.
+    - 리버싱, 웹해킹, 포너블, 악성코드 연구 및 개발 등에 관심이 있습니다.
   photo: /assets/img/uploads/img_1598.jpeg
 links:
   github: https://github.com/tortoiese
@@ -14,41 +14,41 @@ links:
   email: albert419311@gmail.com
   linkedin: ""
 projects:
-  - name: MSG CTF
-    subtitle: 웹 기반 CTF 플랫폼
-    status: 진행 중
-    period: "2026"
-    desc: 모두의 마블 스타일의 보드게임 형태로 문제를 풀어가는 웹 기반 CTF 플랫폼입니다.
-    role: 프론트엔드 개발 · 웹 디자인 · Figma 설계
-    stack: React / Vite / axios / Spring Boot (Backend)
+  - period: "2026"
+    demo: ""
     github: https://github.com/MSG-CTF
+    stack: React / Vite / axios / Spring Boot (Backend)
+    name: MSG CTF
+    desc: 모두의 마블 스타일의 보드게임 형태로 문제를 풀어가는 웹 기반 CTF 플랫폼입니다.
+    status: 진행 중
+    role: 프론트엔드 개발 · 웹 디자인 · Figma 설계
+    subtitle: 웹 기반 CTF 플랫폼
+  - period: 2026.08 ~ 2026.11
     demo: ""
-  - name: 화이트햇스쿨
-    subtitle: 오픈소스 악성코드를 이용한 백신 우회기법 개발
-    status: ""
-    period: YYYY.MM ~ YYYY.MM
-    desc: 오픈소스 악성코드를 사용하여 백신(AV) 우회기법을 개발한 프로젝트입니다.
-    role: ""
-    stack: ""
     github: https://github.com/tortoiese/AV-practice
-    demo: ""
-  - name: 멋쟁이사자처럼 중앙톤
-    subtitle: 풀스택 개발
+    stack: C, RUST
+    name: 화이트햇스쿨
+    desc: 오픈소스 악성코드를 사용하여 백신(AV) 우회기법을 개발한 프로젝트입니다.
     status: ""
-    period: YYYY.MM ~ YYYY.MM
-    desc: 프론트엔드, 백엔드, 배포까지 전 과정을 직접 구현한 풀스택 개발 경험.
-    role: ""
-    stack: ""
-    github: https://github.com/tortoiese/lion
+    role: AVAST 우회기법 개발(Earlybird APC injection,Sleep jitter)
+    subtitle: 오픈소스 악성코드를 이용한 백신 우회기법 개발
+  - period: YYYY.MM ~ YYYY.MM
     demo: ""
+    github: https://github.com/tortoiese/lion
+    stack: "Spring, React, Vite, Tailwind, Figma "
+    name: 멋쟁이사자처럼 중앙톤
+    desc: 프론트엔드, 백엔드, 배포까지 전 과정을 직접 구현한 풀스택 개발 경험.
+    status: ""
+    role: PM & Fullstack
+    subtitle: 풀스택 개발
 activities:
   - name: MJSEC
     subtitle: 정보보안 동아리
     period: 20XX.XX ~ 현재
     desc: 스터디 멘토로 활동하고 있습니다.
   - name: WhiteHat School 4기
-    subtitle: 보안 교육 프로그램
-    period: 20XX.XX ~ 20XX.XX
+    subtitle: KISA(한국인터넷진흥원)
+    period: 2026.06 ~ 2026.12
     desc: ""
   - name: ADsP (빅데이터분석준전문가)
     subtitle: 한국데이터산업진흥원
