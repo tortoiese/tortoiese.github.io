@@ -92,6 +92,18 @@ collections:
                   - { label: 영상 링크 (YouTube 등), name: url, widget: string, required: false }
                   - { label: 또는 영상 파일 업로드, name: file, widget: file, required: false }
                   - { label: 설명, name: caption, widget: string, required: false }
+              - label: 증빙 문서 (PDF)
+                name: documents
+                widget: list
+                required: false
+                collapsed: true
+                label_singular: 문서
+                summary: "{{fields.label}}"
+                hint: "참가확인서, 수료증, 상장 등. 미리보기 사진을 넣으면 사진 칸에 썸네일로 나오고, 누르면 PDF가 열립니다. 미리보기가 없으면 링크로만 표시됩니다."
+                fields:
+                  - { label: 이름, name: label, widget: string, hint: "예) 해커톤 참가확인서" }
+                  - { label: PDF 파일, name: file, widget: file }
+                  - { label: 미리보기 사진, name: preview, widget: image, required: false, hint: "PDF 첫 페이지를 캡처한 이미지 (선택)" }
 
           - label: 활동 · 수상 · 자격증
             name: activities
