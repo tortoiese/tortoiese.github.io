@@ -58,6 +58,40 @@ collections:
               - { label: 기술, name: stack, widget: string, required: false, hint: "예) React / Vite / axios" }
               - { label: GitHub 링크, name: github, widget: string, required: false }
               - { label: 데모 링크, name: demo, widget: string, required: false }
+              - label: 기타 링크
+                name: links
+                widget: list
+                required: false
+                collapsed: true
+                label_singular: 링크
+                summary: "{{fields.label}}"
+                hint: "발표자료, 블로그 글, 수상 기사 등. GitHub/데모 옆에 함께 표시됩니다."
+                fields:
+                  - { label: 이름, name: label, widget: string, hint: "예) 발표자료, 회고 글" }
+                  - { label: URL, name: url, widget: string }
+              - label: 증빙 사진
+                name: images
+                widget: list
+                required: false
+                collapsed: true
+                label_singular: 사진
+                summary: "{{fields.caption}}"
+                hint: "썸네일로 표시되고, 누르면 원본이 새 탭에서 열립니다."
+                fields:
+                  - { label: 사진, name: image, widget: image, choose_url: true }
+                  - { label: 설명, name: caption, widget: string, required: false, hint: "예) 수상 사진, 실행 화면" }
+              - label: 증빙 영상
+                name: videos
+                widget: list
+                required: false
+                collapsed: true
+                label_singular: 영상
+                summary: "{{fields.caption}}"
+                hint: "YouTube 링크는 페이지에 바로 재생되게 넣어집니다. 파일 업로드는 mp4/webm, 용량이 작은 것(수십 MB 이하)만 권장합니다."
+                fields:
+                  - { label: 영상 링크 (YouTube 등), name: url, widget: string, required: false }
+                  - { label: 또는 영상 파일 업로드, name: file, widget: file, required: false }
+                  - { label: 설명, name: caption, widget: string, required: false }
 
           - label: 활동 · 수상 · 자격증
             name: activities
