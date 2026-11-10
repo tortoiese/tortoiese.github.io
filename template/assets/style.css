@@ -279,6 +279,52 @@ a:hover { color: var(--accent); }
 }
 .facts dt { color: var(--muted); }
 
+/* ───────── 프로젝트 증빙 (사진/영상) ───────── */
+.item-media {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+.item-media figure,
+.item-videos figure { margin: 0; }
+.item-media a { display: block; }
+.item-media img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  background: var(--line);
+}
+.item-media a:hover img { border-color: var(--accent); }
+
+.item-videos {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+  max-width: 720px;
+}
+.video-frame {
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--line);
+  background: var(--line);
+}
+.video-frame iframe,
+.video-frame video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.item-media figcaption,
+.item-videos figcaption {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
 /* ───────── Timeline (활동/학력) ───────── */
 .timeline > li {
   display: grid;

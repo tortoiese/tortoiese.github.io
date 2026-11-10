@@ -112,8 +112,13 @@
           <p class="item-desc">{{ item.desc | escape }}</p>
           {%- endif %}
           {%- assign lk = item.github | append: item.demo %}
+          {%- for x in item.links %}{% assign lk = lk | append: x.url %}{% endfor %}
           {%- if lk != "" %}
-          <p class="item-links">{% if item.github and item.github != "" %}<a href="{{ item.github | escape }}" target="_blank" rel="noopener">GitHub</a>{% endif %}{% if item.demo and item.demo != "" %}<a href="{{ item.demo | escape }}" target="_blank" rel="noopener">데모</a>{% endif %}</p>
+          <p class="item-links">
+            {%- if item.github and item.github != "" %}<a href="{{ item.github | escape }}" target="_blank" rel="noopener">GitHub</a>{% endif %}
+            {%- if item.demo and item.demo != "" %}<a href="{{ item.demo | escape }}" target="_blank" rel="noopener">데모</a>{% endif %}
+            {%- for x in item.links %}{% if x.url and x.url != "" %}<a href="{{ x.url | escape }}" target="_blank" rel="noopener">{% if x.label and x.label != "" %}{{ x.label | escape }}{% else %}링크{% endif %}</a>{% endif %}{% endfor %}
+          </p>
           {%- endif %}
           {%- assign fx = item.role | append: item.stack %}
           {%- if fx != "" %}
@@ -121,6 +126,49 @@
             {%- if item.role and item.role != "" %}<div><dt>맡은 일</dt><dd>{{ item.role | escape }}</dd></div>{% endif %}
             {%- if item.stack and item.stack != "" %}<div><dt>기술</dt><dd>{{ item.stack | escape }}</dd></div>{% endif %}
           </dl>
+          {%- endif %}
+
+          {%- comment %} 증빙 영상: YouTube 링크는 임베드, mp4/webm 은 video 태그, 그 외 주소는 링크로 표시 {% endcomment %}
+          {%- if item.videos and item.videos.size > 0 %}
+          <div class="item-videos">
+            {%- for v in item.videos %}
+            {%- assign src = v.file | default: v.url | strip %}
+            {%- if src != "" %}
+            {%- assign yid = "" %}
+            {%- if src contains "youtu.be/" %}{% assign yid = src | split: "youtu.be/" | last | split: "?" | first %}
+            {%- elsif src contains "youtube.com/shorts/" %}{% assign yid = src | split: "shorts/" | last | split: "?" | first %}
+            {%- elsif src contains "youtube.com/embed/" %}{% assign yid = src | split: "embed/" | last | split: "?" | first %}
+            {%- elsif src contains "youtube.com" and src contains "v=" %}{% assign yid = src | split: "v=" | last | split: "&" | first %}
+            {%- endif %}
+            {%- assign low = src | downcase %}
+            <figure>
+              {%- if yid != "" %}
+              <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/{{ yid | escape }}" title="{{ v.caption | default: item.name | escape }}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+              {%- elsif low contains ".mp4" or low contains ".webm" or low contains ".mov" %}
+              <div class="video-frame"><video src="{% if src contains '://' %}{{ src | escape }}{% else %}{{ src | relative_url }}{% endif %}" controls preload="metadata" playsinline></video></div>
+              {%- else %}
+              <p class="item-links"><a href="{{ src | escape }}" target="_blank" rel="noopener">영상 보기</a></p>
+              {%- endif %}
+              {%- if v.caption and v.caption != "" %}<figcaption>{{ v.caption | escape }}</figcaption>{% endif %}
+            </figure>
+            {%- endif %}
+            {%- endfor %}
+          </div>
+          {%- endif %}
+
+          {%- comment %} 증빙 사진: 썸네일을 누르면 원본이 새 탭에서 열립니다 {% endcomment %}
+          {%- if item.images and item.images.size > 0 %}
+          <div class="item-media">
+            {%- for im in item.images %}
+            {%- if im.image and im.image != "" %}
+            {%- if im.image contains "://" %}{% assign isrc = im.image %}{% else %}{% assign isrc = im.image | relative_url %}{% endif %}
+            <figure>
+              <a href="{{ isrc | escape }}" target="_blank" rel="noopener"><img src="{{ isrc | escape }}" alt="{{ im.caption | default: item.name | escape }}" loading="lazy"></a>
+              {%- if im.caption and im.caption != "" %}<figcaption>{{ im.caption | escape }}</figcaption>{% endif %}
+            </figure>
+            {%- endif %}
+            {%- endfor %}
+          </div>
           {%- endif %}
         </article>
         {%- endfor %}
