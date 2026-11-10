@@ -23,7 +23,6 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--header-h) - 24px);
   -webkit-text-size-adjust: 100%;
 }
 
@@ -333,16 +332,56 @@ a:hover { color: var(--accent); }
   line-height: 1.5;
 }
 
-/* ───────── Timeline (활동/학력) ───────── */
-.timeline > li {
-  display: grid;
-  grid-template-columns: 160px 1fr;
-  gap: 24px;
-  padding-bottom: 28px;
-  margin-bottom: 28px;
-  border-bottom: 1px solid var(--line);
+/* ───────── Timeline: 연대기 그래프 (활동/자격증/학력) ─────────
+   [날짜]  ─●─  [내용]   세로선 위의 점(노드)이 스크롤에 따라 커지고,
+   지나온 구간은 --accent 로 채워집니다. (JS 없으면 모두 펼쳐진 상태) */
+.timeline {
+  --date-w: 140px;
+  --rail-x: calc(var(--date-w) + 28px);   /* 세로선 위치 */
+  position: relative;
 }
-.timeline > li:last-child { padding-bottom: 0; margin-bottom: 0; border-bottom: 0; }
+
+/* 세로선 (회색) + 진행선 (포인트 색) */
+.timeline::before,
+.timeline::after {
+  content: "";
+  position: absolute;
+  left: var(--rail-x);
+  top: 16px;
+  width: 2px;
+  transform: translateX(-50%);
+}
+.timeline::before { bottom: 16px; background: var(--line); }
+.timeline::after {
+  height: var(--progress, 0px);
+  background: var(--accent);
+  transition: height 0.45s ease;
+}
+
+.timeline > li {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--date-w) 1fr;
+  gap: 56px;
+  padding-bottom: 44px;
+}
+.timeline > li:last-child { padding-bottom: 0; }
+
+/* 노드 */
+.timeline > li::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: var(--rail-x);
+  top: 10px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  background: var(--bg);
+  transform: translateX(-50%) scale(1);
+  transition: transform 0.35s ease, background-color 0.35s, border-color 0.35s;
+}
 
 .when {
   padding-top: 4px;
@@ -350,9 +389,66 @@ a:hover { color: var(--accent); }
   font-family: var(--font-display);
   font-size: 14px;
   font-weight: 500;
+  text-align: right;
+  transition: color 0.35s;
 }
 .timeline .item-title { margin-top: 0; font-size: 18px; }
 .timeline .item-desc { margin-top: 4px; color: var(--muted); }
+
+.cert-media {
+  grid-template-columns: repeat(auto-fill, minmax(150px, 200px));
+  margin-top: 14px;
+}
+.cert-media img { aspect-ratio: 3 / 4; object-position: top; }
+
+/* ── JS 켜짐: 스크롤 연출 ── */
+.js .timeline > li > div {
+  opacity: 0.4;
+  transform-origin: left top;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+/* 아직 도달 전인 노드는 '뭘 했는지'를 숨겨둠 (자리는 유지해 화면이 흔들리지 않음) */
+.js .timeline > li .item-desc,
+.js .timeline > li .item-media,
+.js .timeline > li .item-links {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.js .timeline > li.is-passed .item-desc,
+.js .timeline > li.is-passed .item-media,
+.js .timeline > li.is-passed .item-links {
+  opacity: 1;
+  transform: none;
+}
+.js .timeline > li.is-passed::before { border-color: var(--accent); }
+
+/* 현재 노드: 점이 커지고 내용이 또렷해짐 */
+.js .timeline > li.is-focus::before {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translateX(-50%) scale(1.75);
+}
+.js .timeline > li.is-focus > div { opacity: 1; transform: scale(1.03); }
+.js .timeline > li.is-focus .when { color: var(--accent); font-weight: 700; }
+
+/* 마지막 노드까지 스크롤로 도달할 수 있게 아래 여백 확보 */
+.js .section:has(.timeline) { padding-bottom: 40vh; }
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline::after,
+  .timeline > li::before,
+  .js .timeline > li > div,
+  .js .timeline > li .item-desc,
+  .js .timeline > li .item-media,
+  .js .timeline > li .item-links { transition: none; }
+  .js .timeline > li.is-focus > div { transform: none; }
+}
+
+/* ───────── 선택 이동 (JS 켜짐): 고른 섹션 하나만 표시 ───────── */
+.js main > section:not(.is-current) { display: none; }
+.js main > .section { border-top: 0; padding-top: 56px; }
+.js main { min-height: calc(100vh - var(--header-h) - 113px); }
 
 /* ───────── Skills ───────── */
 .skills { display: grid; gap: 14px; }
@@ -432,10 +528,18 @@ a:hover { color: var(--accent); }
   .hero-photo { order: -1; width: 112px; height: 130px; }
   .hero-role { margin-top: 28px; }
 
-  .timeline > li,
   .skills > div {
     grid-template-columns: 1fr;
     gap: 4px;
   }
+  .timeline { --rail-x: 7px; }
+  .timeline > li {
+    grid-template-columns: 1fr;
+    gap: 2px;
+    padding-left: 32px;
+    padding-bottom: 36px;
+  }
+  .timeline > li::before { top: 6px; }
+  .when { padding-top: 0; text-align: left; }
   .facts > div { grid-template-columns: 64px 1fr; }
 }

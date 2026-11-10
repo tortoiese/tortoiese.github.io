@@ -28,10 +28,11 @@
   <!-- ───────── Header / NAV ───────── -->
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="#top">seunghwan</a>
+      <a class="brand" href="#home">seunghwan</a>
       <nav class="site-nav" aria-label="주요 메뉴">
         <a href="#projects">프로젝트</a>
         <a href="#activities">활동</a>
+        <a href="#certs">자격증</a>
         <a href="#education">학력</a>
         <a href="#skills">보유기술</a>
         <a href="#contact">Contact</a>
@@ -42,7 +43,7 @@
   <main id="main">
 
     <!-- ───────── Hero (첫 화면) ───────── -->
-    <section class="hero container" aria-labelledby="hero-title">
+    <section id="home" class="hero container" aria-labelledby="hero-title">
       <div class="hero-text">
         <h1 id="hero-title">seunghwan</h1>
         <p class="hero-identity"><span>이승환</span><span>Seung-Hwan Lee</span></p>
@@ -141,6 +142,23 @@
           <div>
             <h3 class="item-title"><strong>활동/수상 이름</strong> <span>기관</span></h3>
             <p class="item-desc">활동 내용을 한두 줄로 적어주세요.</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ───────── 자격증 ───────── -->
+    <section id="certs" class="section container" aria-labelledby="certs-title">
+      <h2 class="section-title" id="certs-title">자격증</h2>
+
+      <ul class="timeline">
+        <li>
+          <p class="when">YYYY.MM</p>
+          <div>
+            <h3 class="item-title"><strong>자격증 이름</strong> <span>발급 기관</span></h3>
+            <div class="item-media cert-media">
+              <figure><a href="assets/profile.svg" target="_blank" rel="noopener"><img src="assets/profile.svg" alt="자격증 사진"></a></figure>
+            </div>
           </div>
         </li>
       </ul>

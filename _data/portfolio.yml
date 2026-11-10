@@ -57,10 +57,13 @@ activities:
     subtitle: KISA(한국인터넷진흥원)
     period: 2026.06 ~ 2026.12
     desc: ""
-  - name: ADsP (빅데이터분석준전문가)
-    subtitle: 한국데이터산업진흥원
-    period: 2026.03
+certs:
+  - name: ADsP (데이터분석 준전문가)
+    issuer: 한국데이터산업진흥원
+    date: 2026.03
     desc: ""
+    image: /assets/img/uploads/adsp-certificate.jpg
+    file: ""
 education:
   - school: 명지대학교
     campus: 자연캠퍼스
