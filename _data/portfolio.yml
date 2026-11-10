@@ -60,10 +60,13 @@ activities:
     desc: |-
       악성 페이로드를 이용한 백신 우회기법 개발 프로젝트를 진행 하였습니다.
       개발한 우회기법 연구를 바탕으로 한국정보처리학회에 논문을 게재하였고 ACK 2026 에서 발표하였습니다.
-  - name: ADsP (빅데이터분석준전문가)
-    subtitle: 한국데이터산업진흥원
-    period: 2026.03
+certs:
+  - name: ADsP (데이터분석 준전문가)
+    issuer: 한국데이터산업진흥원
+    date: 2026.03
     desc: ""
+    image: /assets/img/uploads/adsp-certificate.jpg
+    file: ""
 education:
   - school: 명지대학교
     campus: 자연캠퍼스

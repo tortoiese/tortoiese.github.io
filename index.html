@@ -34,10 +34,11 @@
   <!-- ───────── Header / NAV ───────── -->
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="#top">{{ s.handle | escape }}</a>
+      <a class="brand" href="#home">{{ s.handle | escape }}</a>
       <nav class="site-nav" aria-label="주요 메뉴">
         <a href="#projects">프로젝트</a>
         <a href="#activities">활동</a>
+        <a href="#certs">자격증</a>
         <a href="#education">학력</a>
         <a href="#skills">보유기술</a>
         <a href="#contact">Contact</a>
@@ -48,7 +49,7 @@
   <main id="main">
 
     <!-- ───────── Hero (첫 화면) ───────── -->
-    <section class="hero container" aria-labelledby="hero-title">
+    <section id="home" class="hero container" aria-labelledby="hero-title">
       <div class="hero-text">
         <h1 id="hero-title">{{ s.handle | escape }}</h1>
         <p class="hero-identity"><span>{{ s.name_ko | escape }}</span>{% if s.name_en and s.name_en != "" %}<span>{{ s.name_en | escape }}</span>{% endif %}</p>
@@ -109,7 +110,7 @@
           {%- endif %}
           <h3 class="item-title"><strong>{{ item.name | escape }}</strong>{% if item.subtitle and item.subtitle != "" %} <span>{{ item.subtitle | escape }}</span>{% endif %}</h3>
           {%- if item.desc and item.desc != "" %}
-          <p class="item-desc">{{ item.desc | escape }}</p>
+          <p class="item-desc">{{ item.desc | escape | newline_to_br }}</p>
           {%- endif %}
           {%- assign lk = item.github | append: item.demo %}
           {%- for x in item.links %}{% assign lk = lk | append: x.url %}{% endfor %}
@@ -201,7 +202,37 @@
           <div>
             <h3 class="item-title"><strong>{{ item.name | escape }}</strong>{% if item.subtitle and item.subtitle != "" %} <span>{{ item.subtitle | escape }}</span>{% endif %}</h3>
             {%- if item.desc and item.desc != "" %}
-            <p class="item-desc">{{ item.desc | escape }}</p>
+            <p class="item-desc">{{ item.desc | escape | newline_to_br }}</p>
+            {%- endif %}
+          </div>
+        </li>
+        {%- endfor %}
+      </ul>
+    </section>
+
+    <!-- ───────── 자격증 ───────── -->
+    <section id="certs" class="section container" aria-labelledby="certs-title">
+      <h2 class="section-title" id="certs-title">자격증</h2>
+
+      <ul class="timeline">
+        {%- for c in p.certs %}
+        <li>
+          <p class="when">{{ c.date | escape }}</p>
+          <div>
+            <h3 class="item-title"><strong>{{ c.name | escape }}</strong>{% if c.issuer and c.issuer != "" %} <span>{{ c.issuer | escape }}</span>{% endif %}</h3>
+            {%- if c.desc and c.desc != "" %}
+            <p class="item-desc">{{ c.desc | escape | newline_to_br }}</p>
+            {%- endif %}
+            {%- if c.file and c.file != "" %}{% if c.file contains "://" %}{% assign cfile = c.file %}{% else %}{% assign cfile = c.file | relative_url %}{% endif %}{% else %}{% assign cfile = "" %}{% endif %}
+            {%- if c.image and c.image != "" %}
+            {%- if c.image contains "://" %}{% assign cimg = c.image %}{% else %}{% assign cimg = c.image | relative_url %}{% endif %}
+            <div class="item-media cert-media">
+              <figure>
+                <a href="{% if cfile != "" %}{{ cfile | escape }}{% else %}{{ cimg | escape }}{% endif %}" target="_blank" rel="noopener"><img src="{{ cimg | escape }}" alt="{{ c.name | escape }} 자격증 사진" loading="lazy"></a>
+              </figure>
+            </div>
+            {%- elsif cfile != "" %}
+            <p class="item-links"><a href="{{ cfile | escape }}" target="_blank" rel="noopener">자격증 보기 (PDF)</a></p>
             {%- endif %}
           </div>
         </li>
@@ -220,7 +251,7 @@
           <div>
             <h3 class="item-title"><strong>{{ item.school | escape }}</strong>{% if item.campus and item.campus != "" %} <span>{{ item.campus | escape }}</span>{% endif %}</h3>
             {%- if item.desc and item.desc != "" %}
-            <p class="item-desc">{{ item.desc | escape }}</p>
+            <p class="item-desc">{{ item.desc | escape | newline_to_br }}</p>
             {%- endif %}
           </div>
         </li>
