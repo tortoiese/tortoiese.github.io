@@ -240,6 +240,16 @@ a:hover { color: var(--accent); }
   letter-spacing: -0.01em;
 }
 .item-title strong { font-weight: 700; }
+.item-icon {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  margin-right: 10px;
+  vertical-align: -6px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  object-fit: cover;
+}
 .item-title span {
   margin-left: 6px;
   color: var(--muted);

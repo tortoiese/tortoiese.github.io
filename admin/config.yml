@@ -51,6 +51,7 @@ collections:
             fields:
               - { label: 이름, name: name, widget: string }
               - { label: 부제, name: subtitle, widget: string, required: false }
+              - { label: 아이콘 (로고), name: icon, widget: image, required: false, choose_url: true, hint: "프로젝트 이름 앞에 작게 표시됩니다. 정사각형 이미지 권장 (예: GitHub 조직 로고)" }
               - { label: 상태, name: status, widget: string, required: false, hint: "예) 진행 중 — 비워두면 표시 안 됨" }
               - { label: 기간, name: period, widget: string, required: false, hint: "예) 2026.03 ~ 2026.06" }
               - { label: 설명, name: desc, widget: text }
