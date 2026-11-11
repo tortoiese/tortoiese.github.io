@@ -103,12 +103,18 @@
       <h2 class="section-title" id="projects-title">프로젝트</h2>
       <div class="list">
         {%- for item in p.projects %}
-        <article class="item">
+        {%- assign has_logo = false %}{% if item.icon and item.icon != "" %}{% assign has_logo = true %}{% endif %}
+        <article class="item{% if has_logo %} has-logo{% endif %}">
+          {%- if has_logo %}
+          {%- if item.icon contains "://" %}{% assign lsrc = item.icon %}{% else %}{% assign lsrc = item.icon | relative_url %}{% endif %}
+          <img class="item-logo" src="{{ lsrc | escape }}" alt="{{ item.name | escape }} 로고" width="96" height="96" loading="lazy">
+          <div class="item-body">
+          {%- endif %}
           {%- assign meta = item.status | append: item.period %}
           {%- if meta != "" %}
           <p class="item-meta">{% if item.status and item.status != "" %}<span class="status">{{ item.status | escape }}</span>{% endif %}{% if item.period and item.period != "" %}<span>{{ item.period | escape }}</span>{% endif %}</p>
           {%- endif %}
-          <h3 class="item-title">{% if item.icon and item.icon != "" %}<img class="item-icon" src="{{ item.icon | relative_url }}" alt="" width="28" height="28" loading="lazy">{% endif %}<strong>{{ item.name | escape }}</strong>{% if item.subtitle and item.subtitle != "" %} <span>{{ item.subtitle | escape }}</span>{% endif %}</h3>
+          <h3 class="item-title"><strong>{{ item.name | escape }}</strong>{% if item.subtitle and item.subtitle != "" %} <span>{{ item.subtitle | escape }}</span>{% endif %}</h3>
           {%- if item.desc and item.desc != "" %}
           <p class="item-desc">{{ item.desc | escape | newline_to_br }}</p>
           {%- endif %}
@@ -184,6 +190,9 @@
             </figure>
             {%- endif %}
             {%- endfor %}
+          </div>
+          {%- endif %}
+          {%- if has_logo %}
           </div>
           {%- endif %}
         </article>

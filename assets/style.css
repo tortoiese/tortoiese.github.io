@@ -240,15 +240,24 @@ a:hover { color: var(--accent); }
   letter-spacing: -0.01em;
 }
 .item-title strong { font-weight: 700; }
-.item-icon {
-  display: inline-block;
-  width: 28px;
-  height: 28px;
-  margin-right: 10px;
-  vertical-align: -6px;
+/* 로고가 있는 프로젝트: 왼쪽에 큰 로고, 오른쪽에 내용 */
+.item.has-logo {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+.item-logo {
+  width: 96px;
+  height: 96px;
   border: 1px solid var(--line);
-  border-radius: 6px;
+  border-radius: 16px;
   object-fit: cover;
+  background: var(--bg);
+}
+@media (max-width: 640px) {
+  .item.has-logo { grid-template-columns: 56px minmax(0, 1fr); gap: 16px; }
+  .item-logo { width: 56px; height: 56px; border-radius: 12px; }
 }
 .item-title span {
   margin-left: 6px;
