@@ -39,7 +39,8 @@ collections:
             widget: object
             fields:
               - { label: GitHub URL, name: github, widget: string, required: false }
-              - { label: 블로그 URL, name: blog, widget: string, required: false }
+              - { label: Tech Blog URL (Tistory), name: blog, widget: string, required: false }
+              - { label: Daily Blog URL (Naver), name: daily_blog, widget: string, required: false }
               - { label: 이메일, name: email, widget: string, required: false }
               - { label: LinkedIn URL, name: linkedin, widget: string, required: false, hint: "비워두면 표시되지 않습니다." }
 
