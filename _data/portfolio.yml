@@ -32,11 +32,11 @@ projects:
     demo: ""
     github: https://github.com/VOID-wh4
     stack: C, RUST
-    name: 화이트햇스쿨
+    name: 악성페이로드의 변환 및 로딩방식에 따른 상용 안티바이러스 탐지 특성
     desc: 오픈소스 악성코드를 사용하여 백신(AV) 우회기법을 개발한 프로젝트입니다.
     status: ""
     role: AVAST 우회기법 개발(Earlybird APC injection,Sleep jitter)
-    subtitle: 오픈소스 악성코드를 이용한 백신 우회기법 개발
+    subtitle: 화이트햇스쿨 4기 · 팀 VOID
     icon: /assets/img/uploads/void-wh4-logo.png
   - period: 2026.07 ~ 2026.08
     demo: ""
