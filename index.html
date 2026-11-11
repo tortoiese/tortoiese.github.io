@@ -76,7 +76,15 @@
           <li>
             <a href="{{ l.blog | escape }}" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M4 5h16v14H4zM8 9h8M8 13h8M8 16h4"/></svg>
-              블로그
+              Tech Blog
+            </a>
+          </li>
+          {%- endif %}
+          {%- if l.daily_blog and l.daily_blog != "" %}
+          <li>
+            <a href="{{ l.daily_blog | escape }}" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M4 20h4L19 9l-4-4L4 16zM13 7l4 4"/></svg>
+              Daily Blog
             </a>
           </li>
           {%- endif %}
@@ -293,7 +301,8 @@
 
       <ul class="social social-lg">
         {%- if l.github and l.github != "" %}<li><a href="{{ l.github | escape }}" target="_blank" rel="noopener">GitHub</a></li>{% endif %}
-        {%- if l.blog and l.blog != "" %}<li><a href="{{ l.blog | escape }}" target="_blank" rel="noopener">블로그</a></li>{% endif %}
+        {%- if l.blog and l.blog != "" %}<li><a href="{{ l.blog | escape }}" target="_blank" rel="noopener">Tech Blog</a></li>{% endif %}
+        {%- if l.daily_blog and l.daily_blog != "" %}<li><a href="{{ l.daily_blog | escape }}" target="_blank" rel="noopener">Daily Blog</a></li>{% endif %}
         {%- if l.linkedin and l.linkedin != "" %}<li><a href="{{ l.linkedin | escape }}" target="_blank" rel="noopener">LinkedIn</a></li>{% endif %}
       </ul>
     </section>
