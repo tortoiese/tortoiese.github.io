@@ -24,6 +24,7 @@ projects:
     status: 대회 종료
     role: 프론트엔드 개발 · 웹 디자인 · Figma 설계
     subtitle: 웹 기반 CTF 플랫폼
+    icon: /assets/img/uploads/msg-ctf-logo.png
     links:
       - label: 대회 기록
         url: https://msg-ctf.github.io/
@@ -36,6 +37,7 @@ projects:
     status: ""
     role: AVAST 우회기법 개발(Earlybird APC injection,Sleep jitter)
     subtitle: 오픈소스 악성코드를 이용한 백신 우회기법 개발
+    icon: /assets/img/uploads/void-wh4-logo.png
   - period: 2026.07 ~ 2026.08
     demo: ""
     github: https://github.com/tortoiese/lion
