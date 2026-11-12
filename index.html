@@ -235,8 +235,13 @@
       <h2 class="section-title" id="certs-title">자격증</h2>
 
       <ul class="timeline">
-        {%- assign sorted_certs = p.certs | sort: "date" %}
-        {%- for c in sorted_certs %}
+        {%- comment %} 취득일 순 정렬: 날짜를 모두 글자로 바꿔서 비교하므로 CMS에서 형식이 섞여도(숫자/문자/빈칸) 빌드가 깨지지 않습니다 {% endcomment %}
+        {%- assign cert_keys = "" %}
+        {%- for c in p.certs %}{% assign ck = "" | append: c.date | append: "~" | append: forloop.index0 %}{% assign cert_keys = cert_keys | append: ck | append: "|" %}{% endfor %}
+        {%- assign cert_keys = cert_keys | split: "|" | sort %}
+        {%- for ck in cert_keys %}
+        {%- assign ci = ck | split: "~" | last | plus: 0 %}
+        {%- assign c = p.certs[ci] %}
         <li>
           <p class="when">{{ c.date | escape }}</p>
           <div>
