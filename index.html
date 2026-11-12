@@ -235,7 +235,8 @@
       <h2 class="section-title" id="certs-title">자격증</h2>
 
       <ul class="timeline">
-        {%- for c in p.certs %}
+        {%- assign sorted_certs = p.certs | sort: "date" %}
+        {%- for c in sorted_certs %}
         <li>
           <p class="when">{{ c.date | escape }}</p>
           <div>
