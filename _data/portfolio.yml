@@ -16,7 +16,7 @@ links:
   linkedin: ""
 projects:
   - period: 2026.07 ~ 2026.11
-    demo: https://msg-ctf.github.io/
+    demo: ""
     github: https://github.com/MSG-CTF
     org: MJSEC
     stack: React / Vite / axios / Spring Boot / Figma
@@ -35,10 +35,15 @@ projects:
     github: https://github.com/VOID-wh4
     org: 화이트햇스쿨 4기
     stack: C, RUST
-    name: 악성페이로드의 변환 및 로딩방식에 따른 상용 안티바이러스 탐지 특성
-    desc: 오픈소스 악성코드를 사용하여 백신(AV) 우회기법을 개발한 프로젝트입니다.
+    name: 악성페이로드의 변환 및 로딩방식에 따른 상용 AV 우회 POC코드 개발
+    desc: |-
+      오픈소스 악성코드를 사용하여 백신(AV) 우회기법을 개발한 프로젝트입니다.
+      국내외 상용 백신 6종을 우회에 성공하였고, 한국정보처리학회 ACK 2026 에서 발표하였습니다.
     status: ""
     role: AVAST 우회기법 개발(Earlybird APC injection,Sleep jitter)
+    images:
+      - image: /assets/img/uploads/논문.jpg
+        caption: 발표 포스터 사진
     icon: /assets/img/uploads/void-wh4-logo.png
     team: VOID
   - period: 2026.07 ~ 2026.08
@@ -75,6 +80,13 @@ certs:
     desc: ""
     image: /assets/img/uploads/adsp-certificate.jpg
     file: ""
+  - name: 초경량비행장치 조종사 자격증 1종
+    issuer: TS한국교통안전공단
+    date: 2024.1.11
+    image: /assets/img/uploads/초경량-비행장치-조종사-자격증-1종.jpg
+    desc: |-
+      초경량비행장치 조종사 자격증 1종.
+      최대이륙중량 25kg 초과이면서 연료를 제외한 자체중량 150kg 이하 기체 조종 가능. 
 education:
   - school: 명지대학교
     campus: 자연캠퍼스
