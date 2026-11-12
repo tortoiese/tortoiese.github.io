@@ -56,6 +56,8 @@ collections:
               - { label: 상태, name: status, widget: string, required: false, hint: "예) 진행 중 — 비워두면 표시 안 됨" }
               - { label: 기간, name: period, widget: string, required: false, hint: "예) 2026.03 ~ 2026.06" }
               - { label: 설명, name: desc, widget: text }
+              - { label: 팀명, name: team, widget: string, required: false, hint: "비워두면 표시되지 않습니다. 예) VOID" }
+              - { label: 소속, name: org, widget: string, required: false, hint: "예) MJSEC, 화이트햇스쿨 4기" }
               - { label: 맡은 일, name: role, widget: string, required: false }
               - { label: 기술, name: stack, widget: string, required: false, hint: "예) React / Vite / axios" }
               - { label: GitHub 링크, name: github, widget: string, required: false }
