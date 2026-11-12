@@ -50,7 +50,9 @@ projects:
     status: ""
     role: PM & Fullstack
     subtitle: 해커톤 <ANIMAL LEAGUE> · 풀스택 개발
+    team: 북두7팀
     org: 멋쟁이사자처럼 대학 14기
+    service: ENTRY
     documents:
       - label: 해커톤 참가확인서
         file: /assets/img/uploads/likelion14-hackathon-certificate.pdf

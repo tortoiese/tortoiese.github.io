@@ -137,11 +137,12 @@
             {%- for d in item.documents %}{% if d.file and d.file != "" %}{% unless d.preview and d.preview != "" %}{% if d.file contains "://" %}{% assign dsrc = d.file %}{% else %}{% assign dsrc = d.file | relative_url %}{% endif %}<a href="{{ dsrc | escape }}" target="_blank" rel="noopener">{{ d.label | default: "증빙 문서" | escape }} (PDF)</a>{% endunless %}{% endif %}{% endfor %}
           </p>
           {%- endif %}
-          {%- assign fx = item.team | append: item.org | append: item.role | append: item.stack %}
+          {%- assign fx = item.team | append: item.org | append: item.service | append: item.role | append: item.stack %}
           {%- if fx != "" %}
           <dl class="facts">
             {%- if item.team and item.team != "" %}<div><dt>팀명</dt><dd>{{ item.team | escape }}</dd></div>{% endif %}
             {%- if item.org and item.org != "" %}<div><dt>소속</dt><dd>{{ item.org | escape }}</dd></div>{% endif %}
+            {%- if item.service and item.service != "" %}<div><dt>서비스명</dt><dd>{{ item.service | escape }}</dd></div>{% endif %}
             {%- if item.role and item.role != "" %}<div><dt>맡은 일</dt><dd>{{ item.role | escape }}</dd></div>{% endif %}
             {%- if item.stack and item.stack != "" %}<div><dt>기술</dt><dd>{{ item.stack | escape }}</dd></div>{% endif %}
           </dl>
