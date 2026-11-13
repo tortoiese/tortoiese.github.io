@@ -117,7 +117,7 @@
     <!-- ───────── 프로젝트 ───────── -->
     <section id="projects" class="section container" aria-labelledby="projects-title">
       <h2 class="section-title" id="projects-title">프로젝트</h2>
-      <div class="list">
+      <div class="list project-list">
         {%- for item in p.projects %}
         {%- assign has_logo = false %}{% if item.icon and item.icon != "" %}{% assign has_logo = true %}{% endif %}
         <article class="item{% if has_logo %} has-logo{% endif %}">
@@ -131,6 +131,7 @@
           <p class="item-meta">{% if item.status and item.status != "" %}<span class="status">{{ item.status | escape }}</span>{% endif %}{% if item.period and item.period != "" %}<span>{{ item.period | escape }}</span>{% endif %}</p>
           {%- endif %}
           <h3 class="item-title"><strong>{{ item.name | escape }}</strong>{% if item.subtitle and item.subtitle != "" %} <span>{{ item.subtitle | escape }}</span>{% endif %}</h3>
+          <div class="item-more"><div class="item-more-inner">
           {%- if item.desc and item.desc != "" %}
           <p class="item-desc">{{ item.desc | escape | newline_to_br }}</p>
           {%- endif %}
@@ -211,6 +212,7 @@
             {%- endfor %}
           </div>
           {%- endif %}
+          </div></div>
           {%- if has_logo %}
           </div>
           {%- endif %}

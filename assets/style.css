@@ -464,6 +464,37 @@ a:hover { color: var(--accent); }
   .js .timeline > li.is-focus > div { transform: none; }
 }
 
+/* ── 프로젝트: 스크롤하면 현재 프로젝트가 펼쳐지고 나머지는 접힘 (JS 켜짐) ── */
+.js .project-list { overflow-anchor: none; }
+.js .project-list > .item {
+  transform-origin: left top;
+  opacity: 0.5;
+  transform: scale(0.97);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+.js .project-list > .item.is-focus { opacity: 1; transform: none; }
+.js .project-list .item-more {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.55s ease;
+}
+.js .project-list .item-more-inner {
+  min-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.js .project-list > .item.is-focus .item-more { grid-template-rows: 1fr; }
+.js .project-list > .item.is-focus .item-more-inner { opacity: 1; }
+/* 마지막 프로젝트까지 스크롤로 도달할 수 있게 아래 여백 확보 */
+.js .section:has(.project-list) { padding-bottom: 40vh; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js .project-list > .item,
+  .js .project-list .item-more,
+  .js .project-list .item-more-inner { transition: none; }
+}
+
 /* ───────── 선택 이동 (JS 켜짐): 고른 섹션 하나만 표시 ───────── */
 .js main > section:not(.is-current) { display: none; }
 .js main > .section { border-top: 0; padding-top: 56px; }

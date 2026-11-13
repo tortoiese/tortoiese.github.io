@@ -55,6 +55,7 @@
       }
     }
     playTimelines(views[id]);
+    updateProjects();
   }
 
   document.addEventListener("click", function (e) {
@@ -177,7 +178,34 @@
   }, { passive: true });
   window.addEventListener("resize", updateTimelines);
 
+  // ─────────────────────────────────────────────
+  // 4) 프로젝트: 화면 기준선에 닿은 프로젝트가 펼쳐지고, 지나가면 접힙니다.
+  // ─────────────────────────────────────────────
+  var projectLists = Array.prototype.slice.call(document.querySelectorAll(".project-list"));
+  function updateProjects() {
+    var line = window.innerHeight * 0.4;
+    projectLists.forEach(function (list) {
+      if (!list.offsetParent) return;
+      var items = Array.prototype.slice.call(list.children);
+      var idx = 0;
+      items.forEach(function (it, i) { if (it.getBoundingClientRect().top <= line) idx = i; });
+      // 맨 아래까지 내려왔으면 마지막 프로젝트
+      if (window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 4) idx = items.length - 1;
+      items.forEach(function (it, i) { it.classList.toggle("is-focus", i === idx); });
+    });
+  }
+  window.addEventListener("scroll", updateProjects, { passive: true });
+  window.addEventListener("resize", updateProjects);
+  window.addEventListener("hashchange", updateProjects);
+  projectLists.forEach(function (list) {
+    Array.prototype.slice.call(list.children).forEach(function (it) {
+      it.addEventListener("focusin", function () {
+        Array.prototype.slice.call(list.children).forEach(function (o) { o.classList.toggle("is-focus", o === it); });
+      });
+    });
+  });
+
   // 시작: 주소의 #섹션을 보여줌 (없으면 첫 화면)
   show(idFromHash());
-  window.addEventListener("load", function () { if (!playing) updateTimelines(); });
+  window.addEventListener("load", function () { if (!playing) updateTimelines(); updateProjects(); });
 })();
