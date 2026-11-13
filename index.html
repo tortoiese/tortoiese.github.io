@@ -88,6 +88,14 @@
             </a>
           </li>
           {%- endif %}
+          {%- if l.linkedin and l.linkedin != "" %}
+          <li>
+            <a href="{{ l.linkedin | escape }}" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v16H4zM8 10v6M8 7.5v.01M12 16v-6M12 13a2 2 0 0 1 4 0v3"/></svg>
+              LinkedIn
+            </a>
+          </li>
+          {%- endif %}
           {%- if l.email and l.email != "" %}
           <li>
             <a href="mailto:{{ l.email | escape }}">
