@@ -203,6 +203,7 @@
         it.classList.toggle("is-focus", i === best);
         it.classList.toggle("is-passed", i <= best);
       });
+      list.style.setProperty("--slot-h", slotH + "px");   // 헤더 높이가 달라도 CSS와 어긋나지 않게
       var lr = list.getBoundingClientRect();
       var maxH = Math.max(0, lr.height - slotH);
       list.style.setProperty("--progress", Math.min(maxH, Math.max(0, line - lr.top)) + "px");
