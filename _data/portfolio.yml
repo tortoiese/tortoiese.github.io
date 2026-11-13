@@ -49,6 +49,7 @@ projects:
   - period: 2026.07 ~ 2026.08
     demo: ""
     github: https://github.com/tortoiese/lion
+    icon: /assets/img/uploads/likelion_logo.png
     org: 멋쟁이사자처럼 대학 14기
     stack: "Spring, React, Vite, Tailwind, Figma "
     name: 멋쟁이사자처럼 중앙톤

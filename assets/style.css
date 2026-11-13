@@ -464,35 +464,146 @@ a:hover { color: var(--accent); }
   .js .timeline > li.is-focus > div { transform: none; }
 }
 
-/* ── 프로젝트: 스크롤하면 현재 프로젝트가 펼쳐지고 나머지는 접힘 (JS 켜짐) ── */
-.js .project-list { overflow-anchor: none; }
-.js .project-list > .item {
-  transform-origin: left top;
-  opacity: 0.5;
-  transform: scale(0.97);
-  transition: opacity 0.45s ease, transform 0.45s ease;
+/* ── 프로젝트 트리: 세로 줄기에서 가지가 뻗어 로고(또는 점)가 달리고,
+      스크롤로 현재 프로젝트의 로고가 커지며 내용이 펼쳐집니다. ── */
+.ptree {
+  --date-w: 140px;
+  --rail-x: calc(var(--date-w) + 28px);
+  --bud: 88px;
+  --branch-w: 44px;
+  --body-pl: calc(var(--branch-w) + var(--bud) / 2 + 20px - 28px);
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-.js .project-list > .item.is-focus { opacity: 1; transform: none; }
-.js .project-list .item-more {
+.ptree::before,
+.ptree::after {
+  content: "";
+  position: absolute;
+  left: var(--rail-x);
+  top: 16px;
+  width: 2px;
+  transform: translateX(-50%);
+}
+.ptree::before { bottom: 0; background: linear-gradient(var(--line) calc(100% - 80px), transparent); }
+.ptree::after { height: var(--progress, 0px); background: var(--accent); transition: height 0.45s ease; }
+
+.ptree > li {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--date-w) 1fr;
+  gap: 56px;
+  padding-bottom: 44px;
+}
+.ptree > li:last-child { padding-bottom: 0; }
+
+/* 줄기 위의 점 */
+.ptree > li::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: var(--rail-x);
+  top: 10px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  background: var(--bg);
+  transform: translateX(-50%);
+  transition: border-color 0.35s, background-color 0.35s;
+}
+/* 가지: 줄기에서 아래로 내려와 오른쪽으로 꺾임 */
+.ptree .branch {
+  position: absolute;
+  left: var(--rail-x);
+  top: 16px;
+  width: var(--branch-w);
+  height: 28px;
+  border-left: 2px solid var(--line);
+  border-bottom: 2px solid var(--line);
+  border-bottom-left-radius: 16px;
+  transform: translateX(-1px);
+  transition: border-color 0.35s;
+}
+/* 가지 끝: 로고 또는 점 (가지 끝 중심) */
+.ptree .bud {
+  position: absolute;
+  z-index: 1;
+  left: calc(var(--rail-x) + var(--branch-w));
+  top: 44px;
+  width: var(--bud);
+  height: var(--bud);
+  margin: calc(var(--bud) / -2) 0 0 calc(var(--bud) / -2);
+  transition: transform 0.55s ease;
+}
+.ptree .bud img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  object-fit: cover;
+  background: var(--bg);
+}
+/* 로고 없는 프로젝트: 가지 끝에 점만 */
+.ptree .pnode:not(.has-logo) .bud {
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  background: var(--bg);
+  transition: transform 0.55s ease, background-color 0.35s, border-color 0.35s;
+}
+.ptree .when { padding-top: 4px; }
+.ptree .pnode-body { padding-left: var(--body-pl); min-width: 0; }
+
+/* JS 켜짐: 슬롯 높이를 고정해 펼침/접힘이 서로의 위치 판정에 영향을 주지 않게 함 */
+.js .ptree > li { min-height: 55vh; }
+.js .ptree > li:last-child { min-height: 0; }
+.js .ptree .bud { transform: scale(0.5); }
+.js .ptree .pnode:not(.has-logo) .bud { transform: scale(1); }
+.js .ptree .pnode-body .item-more {
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 0.55s ease;
 }
-.js .project-list .item-more-inner {
+.js .ptree .item-more-inner {
   min-height: 0;
   overflow: hidden;
   opacity: 0;
   transition: opacity 0.4s ease;
 }
-.js .project-list > .item.is-focus .item-more { grid-template-rows: 1fr; }
-.js .project-list > .item.is-focus .item-more-inner { opacity: 1; }
+.js .ptree > li.is-passed::before,
+.js .ptree > li.is-passed .branch { border-color: var(--accent); }
+.js .ptree > li.is-passed:not(.has-logo) .bud { border-color: var(--accent); }
+.js .ptree > li.is-focus::before { background: var(--accent); }
+.js .ptree > li.is-focus .bud { transform: scale(1); }
+.js .ptree > li.is-focus:not(.has-logo) .bud { transform: scale(1.75); background: var(--accent); }
+.js .ptree > li.is-focus .bud img { border-color: var(--accent); }
+.js .ptree > li.is-focus .when { color: var(--accent); font-weight: 700; }
+.js .ptree > li.is-focus .item-more { grid-template-rows: 1fr; }
+.js .ptree > li.is-focus .item-more-inner { opacity: 1; }
 /* 마지막 프로젝트까지 스크롤로 도달할 수 있게 아래 여백 확보 */
-.js .section:has(.project-list) { padding-bottom: 40vh; }
+.js .section:has(.ptree) { padding-bottom: 50vh; }
+
+@media (max-width: 640px) {
+  .ptree { --rail-x: 7px; --bud: 64px; --branch-w: 28px; --body-pl: calc(var(--rail-x) + var(--branch-w) + var(--bud) / 2 + 12px); }
+  .ptree > li { grid-template-columns: 1fr; gap: 2px; }
+  .ptree > li::before { top: 6px; }
+  .ptree .branch { top: 12px; }
+  .ptree .bud { top: 40px; }
+  .ptree .when { padding-top: 0; padding-left: var(--body-pl); text-align: left; }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .js .project-list > .item,
-  .js .project-list .item-more,
-  .js .project-list .item-more-inner { transition: none; }
+  .ptree::after,
+  .ptree > li::before,
+  .ptree .branch,
+  .ptree .bud,
+  .js .ptree .pnode-body .item-more,
+  .js .ptree .item-more-inner { transition: none; }
 }
 
 /* ───────── 선택 이동 (JS 켜짐): 고른 섹션 하나만 표시 ───────── */

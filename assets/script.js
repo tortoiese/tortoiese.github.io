@@ -189,9 +189,14 @@
       var items = Array.prototype.slice.call(list.children);
       var idx = 0;
       items.forEach(function (it, i) { if (it.getBoundingClientRect().top <= line) idx = i; });
-      // 맨 아래까지 내려왔으면 마지막 프로젝트
-      if (window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 4) idx = items.length - 1;
-      items.forEach(function (it, i) { it.classList.toggle("is-focus", i === idx); });
+      // 스크롤 끝까지 내려왔으면 마지막 프로젝트 (화면이 스크롤되는 경우에만)
+      var de = document.documentElement;
+      if (de.scrollHeight > window.innerHeight + 40 && window.innerHeight + window.pageYOffset >= de.scrollHeight - 4) idx = items.length - 1;
+      items.forEach(function (it, i) {
+        it.classList.toggle("is-focus", i === idx);
+        it.classList.toggle("is-passed", i <= idx);
+      });
+      list.style.setProperty("--progress", Math.max(0, items[idx].getBoundingClientRect().top - list.getBoundingClientRect().top) + "px");
     });
   }
   window.addEventListener("scroll", updateProjects, { passive: true });
@@ -200,7 +205,8 @@
   projectLists.forEach(function (list) {
     Array.prototype.slice.call(list.children).forEach(function (it) {
       it.addEventListener("focusin", function () {
-        Array.prototype.slice.call(list.children).forEach(function (o) { o.classList.toggle("is-focus", o === it); });
+        var all = Array.prototype.slice.call(list.children), at = all.indexOf(it);
+        all.forEach(function (o, i) { o.classList.toggle("is-focus", i === at); o.classList.toggle("is-passed", i <= at); });
       });
     });
   });
