@@ -55,7 +55,7 @@
       }
     }
     playTimelines(views[id]);
-    updateProjects();
+    refreshProjects(true);
   }
 
   document.addEventListener("click", function (e) {
@@ -179,40 +179,153 @@
   window.addEventListener("resize", updateTimelines);
 
   // ─────────────────────────────────────────────
-  // 4) 프로젝트: 화면 기준선에 닿은 프로젝트가 펼쳐지고, 지나가면 접힙니다.
+  // 4) 프로젝트 트리: 화면에 고정된 무대에서 스크롤 진행도(pos)로 모든 것을 움직입니다.
+  //    pos = 0 → 첫 프로젝트 정위치, 1 → 둘째 … (정수 근처에서는 머무름)
+  //    스크롤 이벤트에서는 요청만 하고, 실제 계산·쓰기는 rAF 한 번에 모아서 합니다.
   // ─────────────────────────────────────────────
-  var projectLists = Array.prototype.slice.call(document.querySelectorAll(".project-list"));
-  function updateProjects() {
-    var header = document.querySelector(".site-header");
-    var line = (header ? header.offsetHeight : 64) + 40;       // 정위치: 프로젝트 윗변이 오는 높이
-    var slotH = Math.max(200, window.innerHeight - line);      // 정위치에서 프로젝트가 차지하는 높이
-    projectLists.forEach(function (list) {
-      if (!list.offsetParent) return;
-      var items = Array.prototype.slice.call(list.children);
-      var best = 0, bestP = -1;
-      items.forEach(function (it, i) {
-        var r = it.getBoundingClientRect();
-        // 정위치에서 얼마나 벗어났는지 (0 = 정위치). 위로 지나갔는지, 아래에서 오는지 모두 포함
-        var d = Math.max(0, r.top - line, line + slotH - r.bottom) / slotH;
-        var t = Math.min(1, Math.max(0, (d - 0.12) / 0.5));     // 0.12까지는 정위치로 머무름
-        var p = 1 - t * t * (3 - 2 * t);
-        it.style.setProperty("--p", p.toFixed(3));
-        if (p > bestP) { bestP = p; best = i; }
-      });
-      items.forEach(function (it, i) {
-        it.classList.toggle("is-focus", i === best);
-        it.classList.toggle("is-passed", i <= best);
-      });
-      list.style.setProperty("--slot-h", slotH + "px");   // 헤더 높이가 달라도 CSS와 어긋나지 않게
-      var lr = list.getBoundingClientRect();
-      var maxH = Math.max(0, lr.height - slotH);
-      list.style.setProperty("--progress", Math.min(maxH, Math.max(0, line - lr.top)) + "px");
+  var reduceMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var headerEl = document.querySelector(".site-header");
+  var trees = Array.prototype.slice.call(document.querySelectorAll(".ptrack")).map(function (track) {
+    var list = track.querySelector(".ptree");
+    var items = Array.prototype.slice.call(list.children);
+    track.style.setProperty("--n", items.length);
+    return {
+      track: track, list: list, items: items,
+      bodies: items.map(function (li) { return li.querySelector(".pnode-body"); }),
+      inners: items.map(function (li) { return li.querySelector(".item-more"); }),
+      cur: -1, drawn: -1, near: -1, top: 64, step: 1, gap: 132, shift: 0, stageH: 0
+    };
+  });
+
+  function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+  function ease(v) { v = clamp01(v); return v * v * (3 - 2 * v); }
+
+  // 내용이 무대보다 길면 비율을 유지한 채 줄여서 맞춤
+  function fitTree(t) {
+    var avail = t.stageH - 40;
+    t.items.forEach(function (li, i) {
+      var body = t.bodies[i], inner = t.inners[i];
+      if (!body || !inner) return;
+      body.classList.remove("is-tall");
+      var s = 1;
+      inner.style.setProperty("--fit", 1);
+      var h = inner.offsetHeight;
+      if (h > avail) {
+        s = avail / h;                                   // 폭이 넓어지면 더 짧아지므로 반드시 맞음
+        inner.style.setProperty("--fit", s.toFixed(4));
+        var s2 = Math.min(1, avail / inner.offsetHeight); // 넓어진 폭 기준으로 한 번 더 키워 봄
+        inner.style.setProperty("--fit", s2.toFixed(4));
+        if (inner.offsetHeight * s2 <= avail + 1) s = s2;
+        if (s < 0.72) { s = 0.72; body.classList.add("is-tall"); }
+      }
+      inner.style.setProperty("--fit", s.toFixed(4));
     });
   }
-  window.addEventListener("scroll", updateProjects, { passive: true });
-  window.addEventListener("resize", updateProjects);
-  window.addEventListener("hashchange", updateProjects);
+
+  function measureTrees() {
+    var top = headerEl ? headerEl.offsetHeight : 64;
+    trees.forEach(function (t) {
+      t.track.parentNode.style.setProperty("--stage-top", top + "px");
+      if (!t.list.offsetParent) return;                  // 지금 안 보이는 섹션
+      var cs = getComputedStyle(t.list);
+      t.gap = parseFloat(cs.getPropertyValue("--gap")) || 132;
+      t.shift = parseFloat(cs.getPropertyValue("--shift")) || 0;
+      t.top = top;
+      t.stageH = t.list.offsetHeight;
+      t.step = t.items.length > 1 ? (t.track.offsetHeight - t.stageH) / (t.items.length - 1) : 1;
+      fitTree(t);
+      t.drawn = -1;
+    });
+  }
+
+  function drawTree(t) {
+    var pos = t.cur;
+    if (pos === t.drawn) return;
+    t.drawn = pos;
+    var near = Math.round(pos);
+    // 전환 중에는 줄기가 오른쪽으로 밀렸다가, 정위치(정수)에서 왼쪽으로 돌아옴
+    var sx = reduceMotion ? 0 : t.shift * Math.sin(Math.PI * Math.abs(pos - near));
+    var ls = t.list.style;
+    ls.setProperty("--sx", sx.toFixed(2) + "px");
+    ls.setProperty("--trunk-y", (-pos * t.gap).toFixed(2) + "px");
+    ls.setProperty("--prog", (pos * t.gap).toFixed(2) + "px");
+    var half = t.stageH / 2;
+    t.items.forEach(function (li, i) {
+      var d = i - pos, ad = Math.abs(d), dy = d * t.gap;
+      var st = li.style;
+      st.setProperty("--dy", dy.toFixed(2) + "px");
+      st.setProperty("--a", ease(1 - ad).toFixed(4));          // 로고: 이웃까지 걸쳐 서서히
+      st.setProperty("--c", ease(1 - 2 * ad).toFixed(4));      // 내용: 절반 지점에서 완전히 교대
+      st.setProperty("--o", clamp01((half - 70 - Math.abs(dy)) / 70).toFixed(3));
+    });
+    if (near !== t.near) {
+      t.near = near;
+      t.items.forEach(function (li, i) {
+        li.classList.toggle("is-focus", i === near);
+        li.classList.toggle("is-passed", i <= near);
+      });
+    }
+  }
+
+  var treeRaf = 0;
+  function treeFrame() {
+    treeRaf = 0;
+    var again = false;
+    trees.forEach(function (t) {
+      if (!t.list.offsetParent) return;
+      var n = t.items.length;
+      var x = (t.top - t.track.getBoundingClientRect().top) / t.step;
+      x = x < 0 ? 0 : x > n - 1 ? n - 1 : x;
+      var k = Math.floor(x), f = x - k;
+      var target = k + ease((f - 0.22) / 0.56);          // 앞뒤 22%는 정위치에 머무름
+      if (t.cur < 0 || reduceMotion) t.cur = target;
+      else {
+        t.cur += (target - t.cur) * 0.2;                 // 휠 스크롤이 끊겨도 부드럽게 따라감
+        if (Math.abs(target - t.cur) < 0.0008) t.cur = target; else again = true;
+      }
+      drawTree(t);
+    });
+    if (again) treeRaf = requestAnimationFrame(treeFrame);
+  }
+  function requestTree() { if (!treeRaf) treeRaf = requestAnimationFrame(treeFrame); }
+  function refreshProjects(snap) {
+    measureTrees();
+    if (snap) trees.forEach(function (t) { t.cur = -1; });
+    requestTree();
+  }
+
+  // 줄기의 로고를 누르면 그 프로젝트로 이동
+  trees.forEach(function (t) {
+    t.items.forEach(function (li, i) {
+      var bud = li.querySelector(".bud"), title = li.querySelector(".item-title strong");
+      if (!bud) return;
+      function go() {
+        var y = window.pageYOffset + t.track.getBoundingClientRect().top - t.top + i * t.step;
+        window.scrollTo({ top: y, behavior: reduceMotion ? "auto" : "smooth" });
+      }
+      bud.setAttribute("role", "button");
+      bud.setAttribute("tabindex", "0");
+      bud.removeAttribute("aria-hidden");
+      if (title) bud.setAttribute("aria-label", title.textContent + " 프로젝트 보기");
+      bud.addEventListener("click", go);
+      bud.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
+      });
+    });
+    // 사진이 늦게 뜨면 내용 높이가 바뀌므로 다시 맞춤
+    var fitTimer = 0;
+    t.list.addEventListener("load", function () {
+      clearTimeout(fitTimer);
+      fitTimer = setTimeout(function () { refreshProjects(false); }, 120);
+    }, true);
+  });
+
+  if (trees.length) {
+    window.addEventListener("scroll", requestTree, { passive: true });
+    window.addEventListener("resize", function () { refreshProjects(false); });
+  }
+
   // 시작: 주소의 #섹션을 보여줌 (없으면 첫 화면)
   show(idFromHash());
-  window.addEventListener("load", function () { if (!playing) updateTimelines(); updateProjects(); });
+  window.addEventListener("load", function () { if (!playing) updateTimelines(); refreshProjects(false); });
 })();

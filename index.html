@@ -117,6 +117,7 @@
     <!-- ───────── 프로젝트 ───────── -->
     <section id="projects" class="section container" aria-labelledby="projects-title">
       <h2 class="section-title" id="projects-title">프로젝트</h2>
+      <div class="ptrack" style="--n: {{ p.projects | size }}">
       <ol class="ptree project-list">
         {%- for item in p.projects %}
         {%- assign has_logo = false %}{% if item.icon and item.icon != "" %}{% assign has_logo = true %}{% endif %}
@@ -220,6 +221,7 @@
         </li>
         {%- endfor %}
       </ol>
+      </div>
     </section>
 
     <!-- ───────── 활동 ───────── -->
