@@ -183,34 +183,34 @@
   // ─────────────────────────────────────────────
   var projectLists = Array.prototype.slice.call(document.querySelectorAll(".project-list"));
   function updateProjects() {
-    var line = window.innerHeight * 0.4;
+    var header = document.querySelector(".site-header");
+    var line = (header ? header.offsetHeight : 64) + 40;       // 정위치: 프로젝트 윗변이 오는 높이
+    var slotH = Math.max(200, window.innerHeight - line);      // 정위치에서 프로젝트가 차지하는 높이
     projectLists.forEach(function (list) {
       if (!list.offsetParent) return;
       var items = Array.prototype.slice.call(list.children);
-      var idx = 0;
-      items.forEach(function (it, i) { if (it.getBoundingClientRect().top <= line) idx = i; });
-      // 스크롤 끝까지 내려왔으면 마지막 프로젝트 (화면이 스크롤되는 경우에만)
-      var de = document.documentElement;
-      if (de.scrollHeight > window.innerHeight + 40 && window.innerHeight + window.pageYOffset >= de.scrollHeight - 4) idx = items.length - 1;
+      var best = 0, bestP = -1;
       items.forEach(function (it, i) {
-        it.classList.toggle("is-focus", i === idx);
-        it.classList.toggle("is-passed", i <= idx);
+        var r = it.getBoundingClientRect();
+        // 정위치에서 얼마나 벗어났는지 (0 = 정위치). 위로 지나갔는지, 아래에서 오는지 모두 포함
+        var d = Math.max(0, r.top - line, line + slotH - r.bottom) / slotH;
+        var t = Math.min(1, Math.max(0, (d - 0.12) / 0.5));     // 0.12까지는 정위치로 머무름
+        var p = 1 - t * t * (3 - 2 * t);
+        it.style.setProperty("--p", p.toFixed(3));
+        if (p > bestP) { bestP = p; best = i; }
       });
-      list.style.setProperty("--progress", Math.max(0, items[idx].getBoundingClientRect().top - list.getBoundingClientRect().top) + "px");
+      items.forEach(function (it, i) {
+        it.classList.toggle("is-focus", i === best);
+        it.classList.toggle("is-passed", i <= best);
+      });
+      var lr = list.getBoundingClientRect();
+      var maxH = Math.max(0, lr.height - slotH);
+      list.style.setProperty("--progress", Math.min(maxH, Math.max(0, line - lr.top)) + "px");
     });
   }
   window.addEventListener("scroll", updateProjects, { passive: true });
   window.addEventListener("resize", updateProjects);
   window.addEventListener("hashchange", updateProjects);
-  projectLists.forEach(function (list) {
-    Array.prototype.slice.call(list.children).forEach(function (it) {
-      it.addEventListener("focusin", function () {
-        var all = Array.prototype.slice.call(list.children), at = all.indexOf(it);
-        all.forEach(function (o, i) { o.classList.toggle("is-focus", i === at); o.classList.toggle("is-passed", i <= at); });
-      });
-    });
-  });
-
   // 시작: 주소의 #섹션을 보여줌 (없으면 첫 화면)
   show(idFromHash());
   window.addEventListener("load", function () { if (!playing) updateTimelines(); updateProjects(); });
