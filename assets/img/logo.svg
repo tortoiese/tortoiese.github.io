@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="TORTOIESE logo">
+  <!-- 위에서 본 거북이: 육각 등껍질 안에 터미널 프롬프트 >_ -->
+  <rect width="512" height="512" rx="112" fill="#ffffff"/>
+  <g fill="#8bc34a">
+    <!-- 머리 · 꼬리 -->
+    <circle cx="256" cy="98" r="38"/>
+    <path d="M238 398h36l-18 44z"/>
+    <!-- 앞발 · 뒷발 -->
+    <ellipse cx="392" cy="176" rx="46" ry="26" transform="rotate(-38 392 176)"/>
+    <ellipse cx="120" cy="176" rx="46" ry="26" transform="rotate(38 120 176)"/>
+    <ellipse cx="386" cy="356" rx="38" ry="23" transform="rotate(36 386 356)"/>
+    <ellipse cx="126" cy="356" rx="38" ry="23" transform="rotate(-36 126 356)"/>
+  </g>
+  <!-- 등껍질 -->
+  <path d="M256 128l119 69v138l-119 69-119-69V197z" fill="#f4fae9" stroke="#8bc34a" stroke-width="14" stroke-linejoin="round"/>
+  <!-- 등껍질 무늬(회로처럼 이어진 선) -->
+  <g fill="none" stroke="#8bc34a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.7">
+    <path d="M256 190l66 38v76l-66 38-66-38v-76z"/>
+    <path d="M256 128v62M375 197l-53 31M375 335l-53-31M256 404v-62M137 335l53-31M137 197l53 31"/>
+  </g>
+  <!-- 터미널 프롬프트 >_ -->
+  <g fill="none" stroke="#4e8a1c" stroke-width="13" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M224 242l30 24-30 24"/>
+    <path d="M264 292h28"/>
+  </g>
+</svg>
