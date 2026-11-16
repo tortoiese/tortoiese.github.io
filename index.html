@@ -342,7 +342,7 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>© <span id="year">{{ site.time | date: "%Y" }}</span> {{ s.name_ko | escape }}</p>
+      <p>© <span id="year">{{ site.time | date: "%Y" }}</span> {{ s.handle | downcase | escape }}</p>
       <a href="#top">맨 위로 ↑</a>
     </div>
   </footer>
