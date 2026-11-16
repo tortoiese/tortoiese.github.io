@@ -1,11 +1,11 @@
 site:
   handle: TORTOIESE
   name_ko: 이승환
-  name_en: Seung-Hwan Lee
+  name_en: Seunghwan Lee
   title: Student studying Cybersecurity
   intro:
-    - 명지대학교 정보통신공학과에 재학중이며 MJSEC 보안 동아리 스터디 멘토로 활동중입니다.
-    - WhiteHat School 4기에서 악성페이로드를 이용한 AV우회기법 연구를 진행하였습니다.
+    - 명지대학교 정보통신공학과에 재학중이며 MJSEC 보안 동아리 5기 스터디 멘토 및 운영진으로 활동중입니다.
+    - WhiteHat School 4기에서 악성페이로드를 이용한 AV/EDR 우회기법 연구를 진행하였습니다.
     - 리버싱, 웹해킹, 포너블, 악성코드 연구 및 개발 등에 관심이 있습니다.
   photo: /assets/img/uploads/img_1598.jpeg
 links:
@@ -19,17 +19,19 @@ projects:
     demo: ""
     github: https://github.com/MSG-CTF
     org: MJSEC
-    stack: React / Vite / axios / Spring Boot / Figma
+    stack: "React / Vite / axios / Spring Boot / Figma "
     name: MSG CTF
-    desc: 모두의 마블 스타일의 보드게임 형태로 문제를 풀어가는 웹 기반 CTF 플랫폼입니다. 2026.11.08 대회를 운영했습니다 (75팀
-      · 150명 참가).
+    desc: |-
+      모두의 마블 스타일의 보드게임 형태로 문제를 풀어가는 웹 기반 CTF 플랫폼입니다.
+      2026.07 ~ 2026.11의 기간동안 플랫폼을 개발하고, 2026.11.08 대회를 운영했습니다 (75팀 · 150명 참가).
     status: 대회 종료
-    role: 프론트엔드 개발 , 웹 화면 구조 설계 , Figma 디자인, 대회포스터 디자인
+    role: 플랫폼 개발 , 웹 화면 구조 설계 , Figma 디자인, 대회포스터 디자인
     subtitle: 웹 기반 CTF 플랫폼
     icon: /assets/img/uploads/msg-ctf-logo.png
     links:
       - label: 대회 기록
         url: https://msg-ctf.github.io/
+    team: ""
   - period: 2026.08 ~ 2026.11
     demo: ""
     github: https://github.com/VOID-wh4
@@ -49,7 +51,6 @@ projects:
   - period: 2026.07 ~ 2026.08
     demo: ""
     github: https://github.com/tortoiese/lion
-    icon: /assets/img/uploads/likelion_logo.png
     org: 멋쟁이사자처럼 대학 14기
     stack: "Spring, React, Vite, Tailwind, Figma "
     name: 멋쟁이사자처럼 중앙톤
@@ -62,6 +63,7 @@ projects:
       - label: 해커톤 참가확인서
         file: /assets/img/uploads/likelion14-hackathon-certificate.pdf
         preview: /assets/img/uploads/likelion14-hackathon-certificate.png
+    icon: /assets/img/uploads/likelion_logo.png
     team: 북두7팀
 activities:
   - name: MJSEC
