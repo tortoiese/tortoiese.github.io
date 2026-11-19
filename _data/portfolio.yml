@@ -107,6 +107,28 @@ activities:
     desc_en: |-
       Carried out a project developing antivirus evasion techniques using malicious payloads.
       Based on this research, published a paper with the Korea Information Processing Society (KIPS) and presented it at ACK 2026.
+    icon: /assets/img/uploads/whitehat-school-logo.png
+    links:
+      - label: 공식 사이트
+        label_en: Official website
+        url: https://whsedu.kr/home/kor/main.do
+  - name: Baby Beavers 2기
+    name_en: Baby Beavers, 2nd cohort
+    subtitle: Beaver Dam · 클라우드 보안 주니어 양성 프로그램
+    subtitle_en: Beaver Dam · Cloud security junior training program
+    period: 2026.11 ~ 2027.02
+    desc: |-
+      Beaver Dam이 지원하는 대학(원)생·취업준비생 대상 무상 클라우드 보안 교육 프로그램 2기로 활동하고 있습니다.
+      현업 보안 전문가의 오프라인 교육을 받은 뒤, 멘토와 함께 팀 프로젝트를 진행합니다.
+    desc_en: |-
+      Taking part in the 2nd cohort of Baby Beavers, a free cloud security training program for university students and job seekers, supported by Beaver Dam.
+      After offline training from working security professionals, I carry out a team project with a mentor.
+    icon: /assets/img/uploads/baby-beavers-logo.png
+    links:
+      - label: Beaver Dam
+        url: https://beaver-dam.net/kr
+      - label: Baby Beavers
+        url: https://baby.beaver-dam.net/kr
 certs:
   - name: 초경량비행장치 조종사 자격증 1종
     name_en: Ultralight Vehicle Pilot Certificate, Class 1
