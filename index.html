@@ -41,8 +41,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&display=swap">
-  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
-  <script src="{{ '/assets/script.js' | relative_url }}" defer></script>
+  <!-- 한/영 숨김 규칙은 CSS 캐시가 오래돼도 깨지지 않도록 인라인으로도 둡니다 -->
+  <style>html:not([data-lang="en"]) .t-en,html[data-lang="en"] .t-ko{display:none}</style>
+  <!-- ?v= 는 배포(빌드)마다 바뀌어 브라우저가 옛 CSS/JS를 쓰지 않게 합니다 -->
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+  <script src="{{ '/assets/script.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
 </head>
 
 <body id="top">
