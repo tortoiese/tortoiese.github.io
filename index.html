@@ -5,8 +5,9 @@
 {%- assign s = p.site -%}
 {%- assign l = p.links -%}
 {%- capture page_title %}{{ s.handle | capitalize }} / {{ s.name_ko }} · Portfolio{% endcapture -%}
+{%- capture page_title_en %}{{ s.handle | capitalize }} / {{ s.name_en | default: s.name_ko }} · Portfolio{% endcapture -%}
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-title-ko="{{ page_title | escape }}" data-title-en="{{ page_title_en | escape }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,6 +30,12 @@
   <link rel="icon" type="image/svg+xml" href="{{ '/assets/img/logo.svg' | relative_url }}">
   <link rel="apple-touch-icon" href="{{ '/assets/img/logo.png' | relative_url }}">
 
+  <!-- 다크 모드: 저장된 테마(없으면 기기 설정)를 화면이 그려지기 전에 적용 -->
+  <script>(function(){try{var t=null;try{t=localStorage.getItem("theme");}catch(e){}if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t==="dark")document.documentElement.setAttribute("data-theme","dark");}catch(e){}})();</script>
+
+  <!-- 한/영 전환: 저장된 언어(또는 주소의 ?lang=en)를 화면이 그려지기 전에 적용 -->
+  <script>(function(){try{var m=/[?&]lang=(en|ko)\b/.exec(location.search),l=m?m[1]:localStorage.getItem("lang");if(l==="en"){var d=document.documentElement;d.setAttribute("data-lang","en");d.lang="en";}}catch(e){}})();</script>
+
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,20 +46,30 @@
 </head>
 
 <body id="top">
-  <a class="skip-link" href="#main">본문으로 바로 가기</a>
+  <a class="skip-link" href="#main"><span class="t-ko">본문으로 바로 가기</span><span class="t-en" lang="en">Skip to content</span></a>
 
   <!-- ───────── Header / NAV ───────── -->
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="#home">{{ s.handle | escape }}</a>
-      <nav class="site-nav" aria-label="주요 메뉴">
-        <a href="#projects">프로젝트</a>
-        <a href="#activities">활동</a>
-        <a href="#certs">자격증</a>
-        <a href="#education">학력</a>
-        <a href="#skills">보유기술</a>
+      <nav class="site-nav" aria-label="주요 메뉴 / Main menu">
+        <a href="#projects"><span class="t-ko">프로젝트</span><span class="t-en" lang="en">Projects</span></a>
+        <a href="#activities"><span class="t-ko">활동</span><span class="t-en" lang="en">Activities</span></a>
+        <a href="#certs"><span class="t-ko">자격증</span><span class="t-en" lang="en">Certifications</span></a>
+        <a href="#education"><span class="t-ko">학력</span><span class="t-en" lang="en">Education</span></a>
+        <a href="#skills"><span class="t-ko">보유기술</span><span class="t-en" lang="en">Skills</span></a>
         <a href="#contact">Contact</a>
       </nav>
+      <div class="header-tools">
+        <div class="lang-switch" role="group" aria-label="언어 / Language">
+          <button type="button" data-set-lang="ko" lang="ko" aria-label="한국어" aria-pressed="true">KO</button>
+          <button type="button" data-set-lang="en" lang="en" aria-label="English" aria-pressed="false">EN</button>
+        </div>
+        <button type="button" class="theme-toggle" data-theme-toggle aria-label="다크 모드 / Dark mode" aria-pressed="false">
+          <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -67,9 +84,14 @@
         <h2 class="hero-role">{{ s.title | escape }}</h2>
         {%- if s.intro %}
         <p class="hero-desc">
+          {%- if s.intro_en and s.intro_en.size > 0 %}
+          <span class="t-ko">{% for line in s.intro %}{{ line | escape }}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</span>
+          <span class="t-en" lang="en">{% for line in s.intro_en %}{{ line | escape }}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</span>
+          {%- else %}
           {%- for line in s.intro %}
           {{ line | escape }}{% unless forloop.last %}<br>{% endunless %}
           {%- endfor %}
+          {%- endif %}
         </p>
         {%- endif %}
 
@@ -110,7 +132,7 @@
           <li>
             <a href="mailto:{{ l.email | escape }}">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 6h18v12H3zM3 7l9 7 9-7"/></svg>
-              이메일
+              <span class="t-ko">이메일</span><span class="t-en" lang="en">Email</span>
             </a>
           </li>
           {%- endif %}
@@ -126,7 +148,7 @@
 
     <!-- ───────── 프로젝트 ───────── -->
     <section id="projects" class="section container" aria-labelledby="projects-title">
-      <h2 class="section-title" id="projects-title">프로젝트</h2>
+      <h2 class="section-title" id="projects-title"><span class="t-ko">프로젝트</span><span class="t-en" lang="en">Projects</span></h2>
       <div class="ptrack" style="--n: {{ p.projects | size }}">
       <ol class="ptree project-list">
         {%- for item in p.projects %}
@@ -143,11 +165,12 @@
           <div class="item-more"><div class="item-more-inner">
           {%- assign meta = item.status | append: item.period %}
           {%- if meta != "" %}
-          <p class="item-meta">{% if item.status and item.status != "" %}<span class="status">{{ item.status | escape }}</span>{% endif %}{% if item.period and item.period != "" %}<span>{{ item.period | escape }}</span>{% endif %}</p>
+          {%- assign per_en = item.period | replace: "현재", "Present" | replace: "진행 중", "Ongoing" %}
+          <p class="item-meta">{% if item.status and item.status != "" %}<span class="status">{% include t.html ko=item.status en=item.status_en %}</span>{% endif %}{% if item.period and item.period != "" %}<span>{% include t.html ko=item.period en=per_en %}</span>{% endif %}</p>
           {%- endif %}
-          <h3 class="item-title"><strong>{{ item.name | escape }}</strong>{% if item.subtitle and item.subtitle != "" %} <span>{{ item.subtitle | escape }}</span>{% endif %}</h3>
+          <h3 class="item-title"><strong>{% include t.html ko=item.name en=item.name_en %}</strong>{% if item.subtitle and item.subtitle != "" %} <span>{% include t.html ko=item.subtitle en=item.subtitle_en %}</span>{% endif %}</h3>
           {%- if item.desc and item.desc != "" %}
-          <p class="item-desc">{{ item.desc | escape | newline_to_br }}</p>
+          <p class="item-desc">{% include t.html ko=item.desc en=item.desc_en %}</p>
           {%- endif %}
           {%- assign lk = item.github | append: item.demo %}
           {%- for x in item.links %}{% assign lk = lk | append: x.url %}{% endfor %}
@@ -155,19 +178,19 @@
           {%- if lk != "" %}
           <p class="item-links">
             {%- if item.github and item.github != "" %}<a href="{{ item.github | escape }}" target="_blank" rel="noopener">GitHub</a>{% endif %}
-            {%- if item.demo and item.demo != "" %}<a href="{{ item.demo | escape }}" target="_blank" rel="noopener">데모</a>{% endif %}
-            {%- for x in item.links %}{% if x.url and x.url != "" %}<a href="{{ x.url | escape }}" target="_blank" rel="noopener">{% if x.label and x.label != "" %}{{ x.label | escape }}{% else %}링크{% endif %}</a>{% endif %}{% endfor %}
-            {%- for d in item.documents %}{% if d.file and d.file != "" %}{% unless d.preview and d.preview != "" %}{% if d.file contains "://" %}{% assign dsrc = d.file %}{% else %}{% assign dsrc = d.file | relative_url %}{% endif %}<a href="{{ dsrc | escape }}" target="_blank" rel="noopener">{{ d.label | default: "증빙 문서" | escape }} (PDF)</a>{% endunless %}{% endif %}{% endfor %}
+            {%- if item.demo and item.demo != "" %}<a href="{{ item.demo | escape }}" target="_blank" rel="noopener"><span class="t-ko">데모</span><span class="t-en" lang="en">Demo</span></a>{% endif %}
+            {%- for x in item.links %}{% if x.url and x.url != "" %}<a href="{{ x.url | escape }}" target="_blank" rel="noopener">{% if x.label and x.label != "" %}{% include t.html ko=x.label en=x.label_en %}{% else %}<span class="t-ko">링크</span><span class="t-en" lang="en">Link</span>{% endif %}</a>{% endif %}{% endfor %}
+            {%- for d in item.documents %}{% if d.file and d.file != "" %}{% unless d.preview and d.preview != "" %}{% if d.file contains "://" %}{% assign dsrc = d.file %}{% else %}{% assign dsrc = d.file | relative_url %}{% endif %}<a href="{{ dsrc | escape }}" target="_blank" rel="noopener">{% if d.label and d.label != "" %}{% include t.html ko=d.label en=d.label_en %}{% else %}<span class="t-ko">증빙 문서</span><span class="t-en" lang="en">Document</span>{% endif %} (PDF)</a>{% endunless %}{% endif %}{% endfor %}
           </p>
           {%- endif %}
           {%- assign fx = item.team | append: item.org | append: item.service | append: item.role | append: item.stack %}
           {%- if fx != "" %}
           <dl class="facts">
-            {%- if item.team and item.team != "" %}<div><dt>팀명</dt><dd>{{ item.team | escape }}</dd></div>{% endif %}
-            {%- if item.org and item.org != "" %}<div><dt>소속</dt><dd>{{ item.org | escape }}</dd></div>{% endif %}
-            {%- if item.service and item.service != "" %}<div><dt>서비스명</dt><dd>{{ item.service | escape }}</dd></div>{% endif %}
-            {%- if item.role and item.role != "" %}<div><dt>맡은 일</dt><dd>{{ item.role | escape }}</dd></div>{% endif %}
-            {%- if item.stack and item.stack != "" %}<div><dt>기술</dt><dd>{{ item.stack | escape }}</dd></div>{% endif %}
+            {%- if item.team and item.team != "" %}<div><dt><span class="t-ko">팀명</span><span class="t-en" lang="en">Team</span></dt><dd>{% include t.html ko=item.team en=item.team_en %}</dd></div>{% endif %}
+            {%- if item.org and item.org != "" %}<div><dt><span class="t-ko">소속</span><span class="t-en" lang="en">Org</span></dt><dd>{% include t.html ko=item.org en=item.org_en %}</dd></div>{% endif %}
+            {%- if item.service and item.service != "" %}<div><dt><span class="t-ko">서비스명</span><span class="t-en" lang="en">Service</span></dt><dd>{{ item.service | escape }}</dd></div>{% endif %}
+            {%- if item.role and item.role != "" %}<div><dt><span class="t-ko">맡은 일</span><span class="t-en" lang="en">Role</span></dt><dd>{% include t.html ko=item.role en=item.role_en %}</dd></div>{% endif %}
+            {%- if item.stack and item.stack != "" %}<div><dt><span class="t-ko">기술</span><span class="t-en" lang="en">Stack</span></dt><dd>{{ item.stack | escape }}</dd></div>{% endif %}
           </dl>
           {%- endif %}
 
@@ -190,9 +213,9 @@
               {%- elsif low contains ".mp4" or low contains ".webm" or low contains ".mov" %}
               <div class="video-frame"><video src="{% if src contains '://' %}{{ src | escape }}{% else %}{{ src | relative_url }}{% endif %}" controls preload="metadata" playsinline></video></div>
               {%- else %}
-              <p class="item-links"><a href="{{ src | escape }}" target="_blank" rel="noopener">영상 보기</a></p>
+              <p class="item-links"><a href="{{ src | escape }}" target="_blank" rel="noopener"><span class="t-ko">영상 보기</span><span class="t-en" lang="en">Watch video</span></a></p>
               {%- endif %}
-              {%- if v.caption and v.caption != "" %}<figcaption>{{ v.caption | escape }}</figcaption>{% endif %}
+              {%- if v.caption and v.caption != "" %}<figcaption>{% include t.html ko=v.caption en=v.caption_en %}</figcaption>{% endif %}
             </figure>
             {%- endif %}
             {%- endfor %}
@@ -211,7 +234,7 @@
             {%- if d.preview contains "://" %}{% assign psrc = d.preview %}{% else %}{% assign psrc = d.preview | relative_url %}{% endif %}
             <figure class="is-doc">
               <a href="{{ dsrc | escape }}" target="_blank" rel="noopener"><img src="{{ psrc | escape }}" alt="{{ d.label | default: item.name | escape }} 미리보기" loading="lazy"></a>
-              <figcaption>{{ d.label | default: "증빙 문서" | escape }} <span class="doc-tag">PDF</span></figcaption>
+              <figcaption>{% if d.label and d.label != "" %}{% include t.html ko=d.label en=d.label_en %}{% else %}<span class="t-ko">증빙 문서</span><span class="t-en" lang="en">Document</span>{% endif %} <span class="doc-tag">PDF</span></figcaption>
             </figure>
             {%- endif %}
             {%- endfor %}
@@ -220,7 +243,7 @@
             {%- if im.image contains "://" %}{% assign isrc = im.image %}{% else %}{% assign isrc = im.image | relative_url %}{% endif %}
             <figure>
               <a href="{{ isrc | escape }}" target="_blank" rel="noopener"><img src="{{ isrc | escape }}" alt="{{ im.caption | default: item.name | escape }}" loading="lazy"></a>
-              {%- if im.caption and im.caption != "" %}<figcaption>{{ im.caption | escape }}</figcaption>{% endif %}
+              {%- if im.caption and im.caption != "" %}<figcaption>{% include t.html ko=im.caption en=im.caption_en %}</figcaption>{% endif %}
             </figure>
             {%- endif %}
             {%- endfor %}
@@ -236,16 +259,17 @@
 
     <!-- ───────── 활동 ───────── -->
     <section id="activities" class="section container" aria-labelledby="activities-title">
-      <h2 class="section-title" id="activities-title">활동</h2>
+      <h2 class="section-title" id="activities-title"><span class="t-ko">활동</span><span class="t-en" lang="en">Activities</span></h2>
 
       <ul class="timeline">
         {%- for item in p.activities %}
+        {%- assign per_en = item.period | replace: "현재", "Present" | replace: "진행 중", "Ongoing" %}
         <li>
-          <p class="when">{{ item.period | escape }}</p>
+          <p class="when">{% include t.html ko=item.period en=per_en %}</p>
           <div>
-            <h3 class="item-title"><strong>{{ item.name | escape }}</strong>{% if item.subtitle and item.subtitle != "" %} <span>{{ item.subtitle | escape }}</span>{% endif %}</h3>
+            <h3 class="item-title"><strong>{% include t.html ko=item.name en=item.name_en %}</strong>{% if item.subtitle and item.subtitle != "" %} <span>{% include t.html ko=item.subtitle en=item.subtitle_en %}</span>{% endif %}</h3>
             {%- if item.desc and item.desc != "" %}
-            <p class="item-desc">{{ item.desc | escape | newline_to_br }}</p>
+            <p class="item-desc">{% include t.html ko=item.desc en=item.desc_en %}</p>
             {%- endif %}
           </div>
         </li>
@@ -255,7 +279,7 @@
 
     <!-- ───────── 자격증 ───────── -->
     <section id="certs" class="section container" aria-labelledby="certs-title">
-      <h2 class="section-title" id="certs-title">자격증</h2>
+      <h2 class="section-title" id="certs-title"><span class="t-ko">자격증</span><span class="t-en" lang="en">Certifications</span></h2>
 
       <ul class="timeline">
         {%- comment %} 취득일 순 정렬: 날짜를 모두 글자로 바꿔서 비교하므로 CMS에서 형식이 섞여도(숫자/문자/빈칸) 빌드가 깨지지 않습니다 {% endcomment %}
@@ -268,9 +292,9 @@
         <li>
           <p class="when">{{ c.date | escape }}</p>
           <div>
-            <h3 class="item-title"><strong>{{ c.name | escape }}</strong>{% if c.issuer and c.issuer != "" %} <span>{{ c.issuer | escape }}</span>{% endif %}</h3>
+            <h3 class="item-title"><strong>{% include t.html ko=c.name en=c.name_en %}</strong>{% if c.issuer and c.issuer != "" %} <span>{% include t.html ko=c.issuer en=c.issuer_en %}</span>{% endif %}</h3>
             {%- if c.desc and c.desc != "" %}
-            <p class="item-desc">{{ c.desc | escape | newline_to_br }}</p>
+            <p class="item-desc">{% include t.html ko=c.desc en=c.desc_en %}</p>
             {%- endif %}
             {%- if c.file and c.file != "" %}{% if c.file contains "://" %}{% assign cfile = c.file %}{% else %}{% assign cfile = c.file | relative_url %}{% endif %}{% else %}{% assign cfile = "" %}{% endif %}
             {%- if c.image and c.image != "" %}
@@ -281,7 +305,7 @@
               </figure>
             </div>
             {%- elsif cfile != "" %}
-            <p class="item-links"><a href="{{ cfile | escape }}" target="_blank" rel="noopener">자격증 보기 (PDF)</a></p>
+            <p class="item-links"><a href="{{ cfile | escape }}" target="_blank" rel="noopener"><span class="t-ko">자격증 보기 (PDF)</span><span class="t-en" lang="en">View certificate (PDF)</span></a></p>
             {%- endif %}
           </div>
         </li>
@@ -291,16 +315,17 @@
 
     <!-- ───────── 학력 ───────── -->
     <section id="education" class="section container" aria-labelledby="education-title">
-      <h2 class="section-title" id="education-title">학력</h2>
+      <h2 class="section-title" id="education-title"><span class="t-ko">학력</span><span class="t-en" lang="en">Education</span></h2>
 
       <ul class="timeline">
         {%- for item in p.education %}
+        {%- assign per_en = item.period | replace: "재학 중", "Present" | replace: "현재", "Present" %}
         <li>
-          <p class="when">{{ item.period | escape }}</p>
+          <p class="when">{% include t.html ko=item.period en=per_en %}</p>
           <div>
-            <h3 class="item-title"><strong>{{ item.school | escape }}</strong>{% if item.campus and item.campus != "" %} <span>{{ item.campus | escape }}</span>{% endif %}</h3>
+            <h3 class="item-title"><strong>{% include t.html ko=item.school en=item.school_en %}</strong>{% if item.campus and item.campus != "" %} <span>{% include t.html ko=item.campus en=item.campus_en %}</span>{% endif %}</h3>
             {%- if item.desc and item.desc != "" %}
-            <p class="item-desc">{{ item.desc | escape | newline_to_br }}</p>
+            <p class="item-desc">{% include t.html ko=item.desc en=item.desc_en %}</p>
             {%- endif %}
           </div>
         </li>
@@ -310,7 +335,7 @@
 
     <!-- ───────── 보유기술 ───────── -->
     <section id="skills" class="section container" aria-labelledby="skills-title">
-      <h2 class="section-title" id="skills-title">보유기술</h2>
+      <h2 class="section-title" id="skills-title"><span class="t-ko">보유기술</span><span class="t-en" lang="en">Skills</span></h2>
 
       <dl class="skills">
         {%- for sk in p.skills %}
@@ -325,7 +350,7 @@
       <h2 class="section-title" id="contact-title">Contact</h2>
 
       {%- if p.contact.lead and p.contact.lead != "" %}
-      <p class="contact-lead">{{ p.contact.lead | escape }}</p>
+      <p class="contact-lead">{% include t.html ko=p.contact.lead en=p.contact.lead_en %}</p>
       {%- endif %}
       {%- if l.email and l.email != "" %}
       <a class="contact-mail" href="mailto:{{ l.email | escape }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 6h18v12H3zM3 7l9 7 9-7"/></svg>{{ l.email | escape }}</a>
@@ -343,7 +368,7 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <p>© <span id="year">{{ site.time | date: "%Y" }}</span> {{ s.handle | downcase | escape }}</p>
-      <a href="#top">맨 위로 ↑</a>
+      <a href="#top"><span class="t-ko">맨 위로</span><span class="t-en" lang="en">Back to top</span> ↑</a>
     </div>
   </footer>
 </body>

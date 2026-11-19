@@ -1,0 +1,8 @@
+{%- comment -%} 한/영 문구: 영문(en)이 있으면 둘 다 넣고 CSS로 하나만 보여줍니다. 영문이 없으면 한글만. {%- endcomment -%}
+{%- assign t_ko = include.ko | default: "" -%}
+{%- assign t_en = include.en | default: "" -%}
+{%- if t_en != "" and t_en != t_ko -%}
+<span class="t-ko">{{ t_ko | escape | newline_to_br }}</span><span class="t-en" lang="en">{{ t_en | escape | newline_to_br }}</span>
+{%- else -%}
+{{ t_ko | escape | newline_to_br }}
+{%- endif -%}
