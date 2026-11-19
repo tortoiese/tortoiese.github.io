@@ -7,6 +7,10 @@ site:
     - 명지대학교 정보통신공학과에 재학중이며 MJSEC 보안 동아리 5기 스터디 멘토 및 운영진으로 활동중입니다.
     - WhiteHat School 4기에서 악성페이로드를 이용한 AV/EDR 우회기법 연구를 진행하였습니다.
     - 리버싱, 웹해킹, 포너블, 악성코드 연구 및 개발 등에 관심이 있습니다.
+  intro_en:
+    - I am an undergraduate in Information and Communication Engineering at Myongji University, and a study mentor and staff member for the 5th cohort of the MJSEC security club.
+    - At WhiteHat School (4th cohort), I researched AV/EDR evasion techniques using malicious payloads.
+    - I am interested in reverse engineering, web hacking, binary exploitation, and malware research and development.
   photo: /assets/img/uploads/img_1598.jpeg
 links:
   github: https://github.com/tortoiese
@@ -24,77 +28,114 @@ projects:
     desc: |-
       모두의 마블 스타일의 보드게임 형태로 문제를 풀어가는 웹 기반 CTF 플랫폼입니다.
       2026.07 ~ 2026.11의 기간동안 플랫폼을 개발하고, 2026.11.08 대회를 운영했습니다 (75팀 · 150명 참가).
+    desc_en: |-
+      A web-based CTF platform where teams solve challenges on a board-game map, in the style of the game Modoo Marble.
+      Built the platform from 2026.07 to 2026.11 and ran the competition on 2026.11.08 (75 teams · 150 participants).
     status: 대회 종료
+    status_en: Event ended
     role: 플랫폼 개발 , 웹 화면 구조 설계 , Figma 디자인, 대회포스터 디자인
+    role_en: Platform development, web UI structure design, Figma design, competition poster design
     subtitle: 웹 기반 CTF 플랫폼
+    subtitle_en: Web-based CTF platform
     icon: /assets/img/uploads/msg-ctf-logo.png
     links:
       - label: 대회 기록
+        label_en: Competition archive
         url: https://msg-ctf.github.io/
     team: ""
   - period: 2026.08 ~ 2026.11
     demo: ""
     github: https://github.com/VOID-wh4
     org: 화이트햇스쿨 4기
+    org_en: WhiteHat School, 4th cohort
     stack: C, RUST
     name: 악성페이로드의 변환 및 로딩방식에 따른 상용 AV 우회 POC코드 개발
+    name_en: PoC Development for Bypassing Commercial AV by Payload Transformation and Loading Method
     desc: |-
       오픈소스 악성코드를 사용하여 백신(AV) 우회기법을 개발한 프로젝트입니다.
       국내외 상용 백신 6종 우회에 성공하였고, 한국정보처리학회 ACK 2026 에서 발표하였습니다.
+    desc_en: |-
+      A project that developed antivirus (AV) evasion techniques using open-source malware.
+      Successfully bypassed six commercial AV products from Korea and abroad, and presented the work at ACK 2026, hosted by the Korea Information Processing Society (KIPS).
     status: ""
     role: AVAST 우회기법 개발(Earlybird APC injection,Sleep jitter)
+    role_en: Developed AVAST evasion techniques (Early Bird APC injection, sleep jitter)
     images:
       - image: /assets/img/uploads/논문.jpg
         caption: 발표 포스터 사진
+        caption_en: Presentation poster
     icon: /assets/img/uploads/void-wh4-logo.png
     team: VOID
   - period: 2026.07 ~ 2026.08
     demo: ""
     github: https://github.com/tortoiese/lion
     org: 멋쟁이사자처럼 대학 14기
+    org_en: LIKELION Univ., 14th cohort
     stack: "Spring, React, Vite, Tailwind, Figma "
     name: 멋쟁이사자처럼 중앙톤
+    name_en: LIKELION Central Hackathon
     desc: 프론트엔드, 백엔드, 배포까지 전 과정을 직접 구현한 풀스택 개발 경험.
+    desc_en: Full-stack development experience, building the entire process myself from frontend and backend to deployment.
     status: ""
     service: ENTRY
     role: PM & Fullstack
     subtitle: 해커톤 <ANIMAL LEAGUE> · 풀스택 개발
+    subtitle_en: Hackathon <ANIMAL LEAGUE> · Full-stack development
     documents:
       - label: 해커톤 참가확인서
+        label_en: Hackathon participation certificate
         file: /assets/img/uploads/likelion14-hackathon-certificate.pdf
         preview: /assets/img/uploads/likelion14-hackathon-certificate.png
     icon: /assets/img/uploads/likelion_logo.png
     team: 북두7팀
+    team_en: Team Bukdu 7
 activities:
   - name: MJSEC
     subtitle: 정보보안 동아리
+    subtitle_en: Information security club
     period: 2026.03 ~ 현재
     desc: 4.5기에 이어 현재 5기 스터디 멘토로 활동하고 있습니다.
+    desc_en: Following cohort 4.5, I am currently serving as a study mentor for the 5th cohort.
   - name: WhiteHat School 4기
+    name_en: WhiteHat School, 4th cohort
     subtitle: KISA(한국인터넷진흥원)
+    subtitle_en: KISA (Korea Internet & Security Agency)
     period: 2026.06 ~ 2026.12
     desc: |-
       악성 페이로드를 이용한 백신 우회기법 개발 프로젝트를 진행 하였습니다.
       개발한 우회기법 연구를 바탕으로 한국정보처리학회에 논문을 게재하였고 ACK 2026 에서 발표하였습니다.
+    desc_en: |-
+      Carried out a project developing antivirus evasion techniques using malicious payloads.
+      Based on this research, published a paper with the Korea Information Processing Society (KIPS) and presented it at ACK 2026.
 certs:
   - name: 초경량비행장치 조종사 자격증 1종
+    name_en: Ultralight Vehicle Pilot Certificate, Class 1
     issuer: TS한국교통안전공단
+    issuer_en: Korea Transportation Safety Authority (TS)
     date: "2024.01"
     image: /assets/img/uploads/초경량-비행장치-조종사-자격증-1종.jpg
     desc: |-
       초경량비행장치 조종사 자격증 1종.
       최대이륙중량 25kg 초과이면서 연료를 제외한 자체중량 150kg 이하 기체 조종 가능.
+    desc_en: |-
+      Ultralight vehicle pilot certificate, Class 1.
+      Qualified to fly aircraft with a maximum takeoff weight over 25 kg and an empty weight (excluding fuel) of 150 kg or less.
   - name: ADsP (데이터분석 준전문가)
+    name_en: ADsP (Advanced Data Analytics Semi-Professional)
     issuer: 한국데이터산업진흥원
+    issuer_en: Korea Data Agency (K-DATA)
     date: "2026.03"
     desc: ""
     image: /assets/img/uploads/adsp-certificate.jpg
     file: ""
 education:
   - school: 명지대학교
+    school_en: Myongji University
     campus: 자연캠퍼스
+    campus_en: Natural Science Campus
     period: 2022.03 ~ 재학 중
     desc: 정보통신공학과 학사 과정 (2028.02 졸업 예정)
+    desc_en: Bachelor's program in Information and Communication Engineering (expected graduation 2028.02)
 skills:
   - category: Frontend
     items: React, JavaScript, HTML/CSS, Vite, axios
@@ -106,3 +147,4 @@ skills:
     items: Git, Docker, AWS ECR, Figma
 contact:
   lead: 프로젝트, 스터디, 협업 제안은 언제든 환영합니다.
+  lead_en: Proposals for projects, study groups, and collaboration are always welcome.

@@ -32,6 +32,12 @@ collections:
                 name: intro
                 widget: list
                 field: { label: 문장, name: line, widget: string }
+              - label: 소개 문장 (영문)
+                name: intro_en
+                widget: list
+                required: false
+                hint: "EN 버튼을 눌렀을 때 보이는 소개. 비워두면 영문 화면에서도 한글이 그대로 보입니다."
+                field: { label: 문장, name: line, widget: string }
               - { label: 프로필 사진, name: photo, widget: image, required: false }
 
           - label: 링크
@@ -52,14 +58,21 @@ collections:
             fields:
               - { label: 이름, name: name, widget: string }
               - { label: 부제, name: subtitle, widget: string, required: false }
+              - { label: "이름 (영문)", name: name_en, widget: string, required: false, hint: "비워두면 영문 화면에서도 한글이 그대로 보입니다." }
+              - { label: "부제 (영문)", name: subtitle_en, widget: string, required: false }
               - { label: 아이콘 (로고), name: icon, widget: image, required: false, choose_url: true, hint: "프로젝트 이름 앞에 작게 표시됩니다. 정사각형 이미지 권장 (예: GitHub 조직 로고)" }
               - { label: 상태, name: status, widget: string, required: false, hint: "예) 진행 중 — 비워두면 표시 안 됨" }
+              - { label: "상태 (영문)", name: status_en, widget: string, required: false, hint: "예) In progress" }
               - { label: 기간, name: period, widget: string, required: false, hint: "예) 2026.03 ~ 2026.06" }
               - { label: 설명, name: desc, widget: text }
+              - { label: "설명 (영문)", name: desc_en, widget: text, required: false }
               - { label: 팀명, name: team, widget: string, required: false, hint: "비워두면 표시되지 않습니다. 예) VOID" }
+              - { label: "팀명 (영문)", name: team_en, widget: string, required: false }
               - { label: 소속, name: org, widget: string, required: false, hint: "예) MJSEC, 화이트햇스쿨 4기" }
+              - { label: "소속 (영문)", name: org_en, widget: string, required: false }
               - { label: 서비스명, name: service, widget: string, required: false, hint: "비워두면 표시되지 않습니다. 예) ENTRY" }
               - { label: 맡은 일, name: role, widget: string, required: false }
+              - { label: "맡은 일 (영문)", name: role_en, widget: string, required: false }
               - { label: 기술, name: stack, widget: string, required: false, hint: "예) React / Vite / axios" }
               - { label: GitHub 링크, name: github, widget: string, required: false }
               - { label: 데모 링크, name: demo, widget: string, required: false }
@@ -73,6 +86,7 @@ collections:
                 hint: "발표자료, 블로그 글, 수상 기사 등. GitHub/데모 옆에 함께 표시됩니다."
                 fields:
                   - { label: 이름, name: label, widget: string, hint: "예) 발표자료, 회고 글" }
+                  - { label: "이름 (영문)", name: label_en, widget: string, required: false }
                   - { label: URL, name: url, widget: string }
               - label: 증빙 사진
                 name: images
@@ -85,6 +99,7 @@ collections:
                 fields:
                   - { label: 사진, name: image, widget: image, choose_url: true }
                   - { label: 설명, name: caption, widget: string, required: false, hint: "예) 수상 사진, 실행 화면" }
+                  - { label: "설명 (영문)", name: caption_en, widget: string, required: false }
               - label: 증빙 영상
                 name: videos
                 widget: list
@@ -97,6 +112,7 @@ collections:
                   - { label: 영상 링크 (YouTube 등), name: url, widget: string, required: false }
                   - { label: 또는 영상 파일 업로드, name: file, widget: file, required: false }
                   - { label: 설명, name: caption, widget: string, required: false }
+                  - { label: "설명 (영문)", name: caption_en, widget: string, required: false }
               - label: 증빙 문서 (PDF)
                 name: documents
                 widget: list
@@ -107,6 +123,7 @@ collections:
                 hint: "참가확인서, 수료증, 상장 등. 미리보기 사진을 넣으면 사진 칸에 썸네일로 나오고, 누르면 PDF가 열립니다. 미리보기가 없으면 링크로만 표시됩니다."
                 fields:
                   - { label: 이름, name: label, widget: string, hint: "예) 해커톤 참가확인서" }
+                  - { label: "이름 (영문)", name: label_en, widget: string, required: false }
                   - { label: PDF 파일, name: file, widget: file }
                   - { label: 미리보기 사진, name: preview, widget: image, required: false, hint: "PDF 첫 페이지를 캡처한 이미지 (선택)" }
 
@@ -118,8 +135,11 @@ collections:
             fields:
               - { label: 이름, name: name, widget: string }
               - { label: 부제/기관, name: subtitle, widget: string, required: false }
+              - { label: "이름 (영문)", name: name_en, widget: string, required: false, hint: "비워두면 영문 화면에서도 한글이 그대로 보입니다." }
+              - { label: "부제/기관 (영문)", name: subtitle_en, widget: string, required: false }
               - { label: 기간, name: period, widget: string, required: false }
               - { label: 설명, name: desc, widget: text, required: false }
+              - { label: "설명 (영문)", name: desc_en, widget: text, required: false }
 
           - label: 자격증
             name: certs
@@ -129,9 +149,12 @@ collections:
             summary: "{{fields.name}}"
             fields:
               - { label: 이름, name: name, widget: string, hint: "예) ADsP (데이터분석 준전문가)" }
+              - { label: "이름 (영문)", name: name_en, widget: string, required: false, hint: "비워두면 영문 화면에서도 한글이 그대로 보입니다." }
               - { label: 발급 기관, name: issuer, widget: string, required: false }
+              - { label: "발급 기관 (영문)", name: issuer_en, widget: string, required: false }
               - { label: 취득일, name: date, widget: string, required: false, hint: "예) 2026.03" }
               - { label: 설명, name: desc, widget: text, required: false }
+              - { label: "설명 (영문)", name: desc_en, widget: text, required: false }
               - { label: 자격증 사진, name: image, widget: image, required: false, hint: "썸네일로 표시되고, 누르면 원본(또는 PDF)이 새 탭에서 열립니다." }
               - { label: 자격증 PDF, name: file, widget: file, required: false, hint: "선택. 사진이 없으면 'PDF 보기' 링크로만 표시됩니다." }
 
@@ -142,9 +165,12 @@ collections:
             summary: "{{fields.school}}"
             fields:
               - { label: 학교, name: school, widget: string }
+              - { label: "학교 (영문)", name: school_en, widget: string, required: false, hint: "비워두면 영문 화면에서도 한글이 그대로 보입니다." }
               - { label: 캠퍼스/계열, name: campus, widget: string, required: false }
+              - { label: "캠퍼스/계열 (영문)", name: campus_en, widget: string, required: false }
               - { label: 기간, name: period, widget: string, required: false }
               - { label: 설명, name: desc, widget: text, required: false }
+              - { label: "설명 (영문)", name: desc_en, widget: text, required: false }
 
           - label: 보유기술
             name: skills
@@ -160,3 +186,4 @@ collections:
             widget: object
             fields:
               - { label: 안내 문구, name: lead, widget: string, required: false }
+              - { label: "안내 문구 (영문)", name: lead_en, widget: string, required: false }

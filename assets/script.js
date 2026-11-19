@@ -306,7 +306,6 @@
       bud.setAttribute("role", "button");
       bud.setAttribute("tabindex", "0");
       bud.removeAttribute("aria-hidden");
-      if (title) bud.setAttribute("aria-label", title.textContent + " 프로젝트 보기");
       bud.addEventListener("click", go);
       bud.addEventListener("keydown", function (e) {
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
@@ -324,6 +323,75 @@
     window.addEventListener("scroll", requestTree, { passive: true });
     window.addEventListener("resize", function () { refreshProjects(false); });
   }
+
+  // ─────────────────────────────────────────────
+  // 5) 한/영 전환: <html data-lang> 만 바꾸면 CSS가 해당 언어 문구만 보여줍니다.
+  //    선택은 localStorage 에 저장되고, 주소에 ?lang=en 을 붙여 공유할 수도 있습니다.
+  // ─────────────────────────────────────────────
+  var langButtons = Array.prototype.slice.call(document.querySelectorAll("[data-set-lang]"));
+
+  function visibleText(el) {
+    var one = el.querySelector(root.getAttribute("data-lang") === "en" ? ".t-en" : ".t-ko");
+    return (one || el).textContent.trim();
+  }
+
+  function applyLang(lang, opts) {
+    opts = opts || {};
+    var en = lang === "en";
+    if (en) root.setAttribute("data-lang", "en"); else root.removeAttribute("data-lang");
+    root.lang = en ? "en" : "ko";
+    var title = root.getAttribute(en ? "data-title-en" : "data-title-ko");
+    if (title) document.title = title;
+    langButtons.forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-set-lang") === (en ? "en" : "ko")));
+    });
+    // 줄기 로고(버튼)의 읽기용 이름도 언어에 맞춤
+    trees.forEach(function (t) {
+      t.items.forEach(function (li) {
+        var bud = li.querySelector(".bud"), name = li.querySelector(".item-title strong");
+        if (bud && name) bud.setAttribute("aria-label", en ? "View project: " + visibleText(name) : visibleText(name) + " 프로젝트 보기");
+      });
+    });
+    if (opts.save) {
+      try { localStorage.setItem("lang", en ? "en" : "ko"); } catch (e) {}
+      // 주소에 ?lang= 이 있으면 새로고침해도 유지되도록 같이 바꿈
+      if (/[?&]lang=(en|ko)\b/.test(location.search)) {
+        history.replaceState(null, "", location.pathname + location.search.replace(/([?&]lang=)(en|ko)\b/, "$1" + (en ? "en" : "ko")) + location.hash);
+      }
+      // 글 길이가 달라지므로 위치·크기를 다시 계산
+      if (!playing) updateTimelines();
+      refreshProjects(false);
+    }
+  }
+
+  langButtons.forEach(function (b) {
+    b.addEventListener("click", function () { applyLang(b.getAttribute("data-set-lang"), { save: true }); });
+  });
+  applyLang(root.getAttribute("data-lang") === "en" ? "en" : "ko");
+
+  // ─────────────────────────────────────────────
+  // 6) 다크 모드: <html data-theme="dark"> 만 바꾸면 CSS 변수가 바뀝니다.
+  //    선택은 localStorage 에 저장되고, 처음에는 head 의 작은 스크립트가 미리 적용해 둡니다.
+  // ─────────────────────────────────────────────
+  var themeBtn = document.querySelector("[data-theme-toggle]");
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
+
+  function applyTheme(theme, save) {
+    var dark = theme === "dark";
+    if (dark) root.setAttribute("data-theme", "dark"); else root.removeAttribute("data-theme");
+    if (themeBtn) themeBtn.setAttribute("aria-pressed", String(dark));
+    if (themeMeta) themeMeta.setAttribute("content", dark ? "#121212" : "#ffffff");
+    if (save) {
+      try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch (e) {}
+    }
+  }
+
+  if (themeBtn) {
+    themeBtn.addEventListener("click", function () {
+      applyTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark", true);
+    });
+  }
+  applyTheme(root.getAttribute("data-theme") === "dark" ? "dark" : "light");
 
   // 시작: 주소의 #섹션을 보여줌 (없으면 첫 화면)
   show(idFromHash());
