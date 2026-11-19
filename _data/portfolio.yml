@@ -90,6 +90,18 @@ projects:
     team: 북두7팀
     team_en: Team Bukdu 7
 activities:
+  - name: 대한민국 해군
+    name_en: Republic of Korea Navy
+    icon: /assets/img/uploads/rok-navy-logo.svg
+    subtitle: 1함대 양만춘함
+    subtitle_en: 1st Fleet, ROKS Yangmanchun
+    period: 2024.05 ~ 2026.01
+    desc: |-
+      갑판병
+      만기 전역
+    desc_en: |-
+      Deck seaman
+      Discharged upon completion of service.
   - name: MJSEC
     icon: /assets/img/uploads/mjsec-logo.png
     subtitle: 정보보안 동아리
