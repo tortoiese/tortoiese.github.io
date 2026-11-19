@@ -91,6 +91,7 @@ projects:
     team_en: Team Bukdu 7
 activities:
   - name: MJSEC
+    icon: /assets/img/uploads/mjsec-logo.png
     subtitle: 정보보안 동아리
     subtitle_en: Information security club
     period: 2026.03 ~ 현재
