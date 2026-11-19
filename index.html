@@ -270,9 +270,20 @@
         <li>
           <p class="when">{% include t.html ko=item.period en=per_en %}</p>
           <div>
+            {%- if item.icon and item.icon != "" %}
+            {%- if item.icon contains "://" %}{% assign alogo = item.icon %}{% else %}{% assign alogo = item.icon | relative_url %}{% endif %}
+            <span class="act-logo"><img src="{{ alogo | escape }}" alt="{{ item.name | escape }} 로고" loading="lazy"></span>
+            {%- endif %}
             <h3 class="item-title"><strong>{% include t.html ko=item.name en=item.name_en %}</strong>{% if item.subtitle and item.subtitle != "" %} <span>{% include t.html ko=item.subtitle en=item.subtitle_en %}</span>{% endif %}</h3>
             {%- if item.desc and item.desc != "" %}
             <p class="item-desc">{% include t.html ko=item.desc en=item.desc_en %}</p>
+            {%- endif %}
+            {%- assign alk = "" %}
+            {%- for x in item.links %}{% assign alk = alk | append: x.url %}{% endfor %}
+            {%- if alk != "" %}
+            <p class="item-links">
+              {%- for x in item.links %}{% if x.url and x.url != "" %}<a href="{{ x.url | escape }}" target="_blank" rel="noopener">{% if x.label and x.label != "" %}{% include t.html ko=x.label en=x.label_en %}{% else %}<span class="t-ko">링크</span><span class="t-en" lang="en">Link</span>{% endif %}</a>{% endif %}{% endfor %}
+            </p>
             {%- endif %}
           </div>
         </li>

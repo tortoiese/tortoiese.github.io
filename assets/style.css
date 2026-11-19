@@ -481,6 +481,17 @@ html[data-lang="en"] .t-ko { display: none; }
   text-align: right;
   transition: color 0.35s;
 }
+/* 활동 로고: 투명 PNG라 다크 모드에서도 보이도록 흰 타일 위에 올림 */
+.act-logo {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+.act-logo img { display: block; height: 40px; width: auto; max-width: 180px; object-fit: contain; }
 .timeline .item-title { margin-top: 0; font-size: 18px; }
 .timeline .item-desc { margin-top: 4px; color: var(--muted); }
 

@@ -140,6 +140,19 @@ collections:
               - { label: 기간, name: period, widget: string, required: false }
               - { label: 설명, name: desc, widget: text, required: false }
               - { label: "설명 (영문)", name: desc_en, widget: text, required: false }
+              - { label: 로고, name: icon, widget: image, required: false, choose_url: true, hint: "제목 위에 작게 표시됩니다. 투명 배경 로고도 흰 타일 위에 놓여 다크 모드에서 보입니다." }
+              - label: 링크
+                name: links
+                widget: list
+                required: false
+                collapsed: true
+                label_singular: 링크
+                summary: "{{fields.label}}"
+                hint: "공식 사이트, 프로그램 페이지 등."
+                fields:
+                  - { label: 이름, name: label, widget: string, hint: "예) 공식 사이트" }
+                  - { label: "이름 (영문)", name: label_en, widget: string, required: false }
+                  - { label: URL, name: url, widget: string }
 
           - label: 자격증
             name: certs
