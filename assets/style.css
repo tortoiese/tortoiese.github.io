@@ -785,6 +785,8 @@ html[data-lang="en"] .t-ko { display: none; }
     --shift: 14px;
     --body-pl: calc(var(--bud) + 20px);
   }
+  /* 폰: 내용이 x=92px 부터 시작하므로 제목 뒤 가림막은 그 안쪽(제목 폭)까지만 */
+  .js .section:has(.ptrack) > .section-title::before { width: 72px; height: 100px; top: -40px; }
   .ptree .item-title { font-size: 21px; }
   .ptree .item-title > span { font-size: 14px; }
   .ptree .item-desc { font-size: 15px; }
