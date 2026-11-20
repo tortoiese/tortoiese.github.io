@@ -68,7 +68,7 @@ projects:
     team: VOID
   - period: 2026.07 ~ 2026.08
     demo: ""
-    github: https://github.com/tortoiese/lion
+    github: https://github.com/tortoiese/ENTRY
     org: 멋쟁이사자처럼 대학 14기
     org_en: LIKELION Univ., 14th cohort
     stack: "Spring, React, Vite, Tailwind, Figma "
